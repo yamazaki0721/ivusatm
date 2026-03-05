@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クラブ管理 - IVUSA人事タレントマネジメントシステム</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/club.css">
+    <link rel="stylesheet" href="css/org-chart-new.css">
+    <link rel="stylesheet" href="css/goals-tasks.css">
+    <link rel="stylesheet" href="css/connections.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-users"></i> <span>IVUSA</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>自分ページ</span>
+            </a>
+            <a href="club.html" class="nav-item active">
+                <i class="fas fa-users-cog"></i>
+                <span>クラブ管理</span>
+            </a>
+            <a href="project.html" class="nav-item">
+                <i class="fas fa-project-diagram"></i>
+                <span>プロジェクト管理</span>
+            </a>
+            <a href="org-chart.html" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>本部管理</span>
+            </a>
+            <a href="talent-search.html" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>人材検索</span>
+            </a>
+            <a href="training.html" class="nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>研修メニュー</span>
+            </a>
+            <a href="training-management.html" class="nav-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>研修管理</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>田中 優希（クラブ長）</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-users-cog"></i> クラブ管理 - 東京クラブ</h2>
+            <p class="page-description">クラブの組織運営と会員の活動状況を管理します</p>
+        </div>
+
+        <!-- クラブサマリー -->
+        <div class="club-summary">
+            <div class="summary-card">
+                <i class="fas fa-users"></i>
+                <div class="summary-info">
+                    <h3>総会員数</h3>
+                    <p class="summary-value"><span id="totalMembers">50</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-user-tie"></i>
+                <div class="summary-info">
+                    <h3>スタッフ会員</h3>
+                    <p class="summary-value"><span id="staffMembers">20</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-user-friends"></i>
+                <div class="summary-info">
+                    <h3>メンバー会員</h3>
+                    <p class="summary-value"><span id="regularMembers">30</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-chart-line"></i>
+                <div class="summary-info">
+                    <h3>活動参加率</h3>
+                    <p class="summary-value"><span id="participationRate">72</span>%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- タブナビゲーション -->
+        <div class="tabs">
+            <button class="tab-btn" data-tab="goals">
+                <i class="fas fa-bullseye"></i> 目標・タスク
+            </button>
+            <button class="tab-btn active" data-tab="organization">
+                <i class="fas fa-sitemap"></i> 組閣
+            </button>
+            <button class="tab-btn" data-tab="composition">
+                <i class="fas fa-users-cog"></i> 人事配置
+            </button>
+            <button class="tab-btn" data-tab="participation">
+                <i class="fas fa-calendar-check"></i> 参加状況
+            </button>
+            <button class="tab-btn" data-tab="training">
+                <i class="fas fa-graduation-cap"></i> 研修状況
+            </button>
+            <button class="tab-btn" data-tab="relations">
+                <i class="fas fa-project-diagram"></i> Relationマップ
+            </button>
+        </div>
+
+        <!-- Relationマップタブ -->
+        <div class="tab-content" id="tab-relations">
+            <div class="section-header">
+                <h3><i class="fas fa-project-diagram"></i> 人間関係マップ</h3>
+                <p class="section-description">クラブメンバーの人間関係を可視化し、チームビルディングに活用します</p>
+            </div>
+
+            <!-- 人間関係マップセクション -->
+            <div class="relations-section">
+                <!-- コントロールパネル -->
+                <div class="section-card">
+                    <div class="card-body">
+                        <div class="relations-controls">
+                            <div class="control-group">
+                                <label><i class="fas fa-filter"></i> メンバー選択</label>
+                                <select id="relationMemberFilter" class="form-control" onchange="loadMemberRelations()">
+                                    <option value="">全メンバーを選択...</option>
+                                    <!-- 動的に生成される -->
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <label><i class="fas fa-eye"></i> 表示モード</label>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-outline active" data-mode="network" onclick="switchRelationView('network')">
+                                        <i class="fas fa-network-wired"></i> ネットワーク図
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" data-mode="list" onclick="switchRelationView('list')">
+                                        <i class="fas fa-list"></i> リスト表示
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <button class="btn btn-primary" onclick="openManagementRelationModal()">
+                                    <i class="fas fa-plus"></i> Relationを追加
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ネットワーク図表示エリア -->
+                <div class="section-card" id="relationNetworkView">
+                    <div class="card-header">
+                        <h3><i class="fas fa-network-wired"></i> ネットワーク図</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="network-container" id="networkContainer">
+                            <!-- ネットワーク図がここに描画される -->
+                            <canvas id="networkCanvas" width="800" height="600"></canvas>
+                        </div>
+                        <div class="network-legend">
+                            <h4>凡例</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <span class="legend-line" style="border-top: 2px solid #3b82f6;"></span>
+                                    <span>本人登録（実線）</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-line" style="border-top: 2px dashed #10b981;"></span>
+                                    <span>上長登録・承認済み（破線）</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-line" style="border-top: 2px dotted #f59e0b;"></span>
+                                    <span>上長登録・承認待ち（点線）</span>
+                                </div>
+                            </div>
+                            <div class="legend-items" style="margin-top: 12px;">
+                                <div class="legend-item">
+                                    <span class="legend-node" style="background: #10b981;"></span>
+                                    <span>Relationが多い (5件以上)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-node" style="background: #f59e0b;"></span>
+                                    <span>Relationが普通 (2-4件)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-node" style="background: #ef4444;"></span>
+                                    <span>Relationが少ない/孤立 (0-1件)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- リスト表示エリア -->
+                <div class="section-card" id="relationListView" style="display: none;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-list"></i> メンバー一覧</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="relationListContainer">
+                            <!-- メンバーリストが動的に生成される -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 選択されたメンバーの詳細 -->
+                <div class="section-card" id="memberRelationDetail" style="display: none;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user"></i> <span id="selectedMemberName">メンバー名</span> のRelation</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- 統計情報 -->
+                        <div class="relation-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="statTotalRelations">0</div>
+                                <div class="stat-label">合計Relation数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="statPersonalRelations">0</div>
+                                <div class="stat-label">本人登録</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="statApprovedRelations">0</div>
+                                <div class="stat-label">上長登録（承認済み）</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="statPendingRelations">0</div>
+                                <div class="stat-label">上長登録（承認待ち）</div>
+                            </div>
+                        </div>
+
+                        <!-- Relationリスト -->
+                        <div class="relation-details-section">
+                            <h4><i class="fas fa-user-check"></i> 本人が登録したRelation</h4>
+                            <div class="relation-items-list" id="personalRelationsList">
+                                <!-- 動的に生成される -->
+                            </div>
+                        </div>
+
+                        <div class="relation-details-section">
+                            <h4><i class="fas fa-user-shield"></i> 上長が登録したRelation</h4>
+                            
+                            <h5 class="subsection-title"><i class="fas fa-check-circle"></i> 承認済み</h5>
+                            <div class="relation-items-list" id="approvedRelationsList">
+                                <!-- 動的に生成される -->
+                            </div>
+
+                            <h5 class="subsection-title"><i class="fas fa-clock"></i> 承認待ち</h5>
+                            <div class="relation-items-list" id="pendingRelationsList">
+                                <!-- 動的に生成される -->
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="openManagementRelationModal()">
+                                <i class="fas fa-plus"></i> 管理者としてRelationを追加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 目標・タスクタブ -->
+        <div class="tab-content" id="tab-goals">
+            <div class="section-header">
+                <h3><i class="fas fa-bullseye"></i> 目標・タスク管理</h3>
+                <p class="section-description">クラブの目標を設定し、達成のためのタスクを管理します</p>
+            </div>
+
+            <!-- 目標設定セクション -->
+            <div class="goals-section">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-flag"></i> 目標設定</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- タイムライン -->
+                        <div class="goals-timeline">
+                            <!-- 1年目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-year">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <span>1年目標</span>
+                                    </div>
+                                    <div class="goal-period-date">12ヶ月後</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="year-significance" rows="2" 
+                                            placeholder="例：クラブの活動を通じて地域社会に貢献し、メンバー全員が成長できる環境を作る"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="year-result-quantity" rows="2" 
+                                                placeholder="例：年間プロジェクト参加率80%以上、新規メンバー10名獲得"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="year-result-quality" rows="2" 
+                                                placeholder="例：メンバー間の信頼関係が深まり、自主的に活動に参加する文化が定着"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="year-action-quantity" rows="2" 
+                                                placeholder="例：月1回の全体ミーティング実施、四半期ごとの振り返り会開催"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="year-action-quality" rows="2" 
+                                                placeholder="例：メンバー全員が意見を言いやすい雰囲気を作る"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 矢印 -->
+                            <div class="timeline-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+
+                            <!-- 半年後目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-halfyear">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>半年後目標</span>
+                                    </div>
+                                    <div class="goal-period-date">6ヶ月後</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="halfyear-significance" rows="2" 
+                                            placeholder="例：メンバー同士の協力体制を強化し、チームワークを向上させる"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="halfyear-result-quantity" rows="2" 
+                                                placeholder="例：プロジェクト参加率75%以上、クラブ会参加率70%以上"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="halfyear-result-quality" rows="2" 
+                                                placeholder="例：メンバー間の連携がスムーズになり、助け合う文化が根付いている"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="halfyear-action-quantity" rows="2" 
+                                                placeholder="例：月2回のクラブ会実施、メンバー間の1on1を月1回実施"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="halfyear-action-quality" rows="2" 
+                                                placeholder="例：クラブ会で全員が発言する機会を作る"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 矢印 -->
+                            <div class="timeline-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+
+                            <!-- 3ヶ月後目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-threemonth">
+                                        <i class="fas fa-calendar-day"></i>
+                                        <span>3ヶ月後目標</span>
+                                    </div>
+                                    <div class="goal-period-date">3ヶ月後</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="threemonth-significance" rows="2" 
+                                            placeholder="例：新メンバーの早期定着とクラブ文化の浸透を図る"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="threemonth-result-quantity" rows="2" 
+                                                placeholder="例：新規メンバー3名獲得、プロジェクト参加率70%以上"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="threemonth-result-quality" rows="2" 
+                                                placeholder="例：新メンバーがクラブに馴染み、積極的に活動に参加している"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="threemonth-action-quantity" rows="2" 
+                                                placeholder="例：新メンバー向けオリエンテーション3回実施"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="threemonth-action-quality" rows="2" 
+                                                placeholder="例：新メンバーに積極的に話しかける"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="goal-actions">
+                            <button class="btn btn-primary" onclick="saveGoals()">
+                                <i class="fas fa-save"></i> 目標を保存
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タスク管理セクション -->
+            <div class="tasks-section">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tasks"></i> タスク管理</h3>
+                        <button class="btn btn-primary btn-sm" onclick="openTaskModal()">
+                            <i class="fas fa-plus"></i> 新規タスク
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <!-- タスク一覧 -->
+                        <div class="task-filters">
+                            <button class="filter-btn active" data-filter="all" onclick="filterTasks('all')">
+                                すべて <span class="badge" id="badge-all">4</span>
+                            </button>
+                            <button class="filter-btn" data-filter="assigned" onclick="filterTasks('assigned')">
+                                振り分け済み <span class="badge badge-success" id="badge-assigned">2</span>
+                            </button>
+                            <button class="filter-btn" data-filter="unassigned" onclick="filterTasks('unassigned')">
+                                未振り分け <span class="badge badge-warning" id="badge-unassigned">2</span>
+                            </button>
+                        </div>
+
+                        <div class="tasks-container" id="tasksContainer">
+                            <!-- タスクリストはJavaScriptで生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 組閣タブ -->
+        <div class="tab-content active" id="tab-organization">
+            <div class="section-header">
+                <h3><i class="fas fa-sitemap"></i> クラブ組閣</h3>
+                <p class="section-description">組閣図機能は準備中です</p>
+            </div>
+        </div>
+
+        <!-- 人事配置タブ -->
+        <div class="tab-content" id="tab-composition">
+            <!-- 学年・会員区分マトリクス -->
+            <div class="section-card">
+                <button class="btn btn-secondary" onclick="resetOrgChart()">
+                    <i class="fas fa-undo"></i> リセット
+                </button>
+            </div>
+
+            <!-- 新しい組織図レイアウト -->
+            <div class="org-chart-new-layout">
+                <!-- 左側：階層構造 -->
+                <div class="org-hierarchy-sidebar">
+                    <!-- 第1階層：クラマネ -->
+                    <div class="hierarchy-item level-1" data-id="pos-1-1" data-role="クラマネ">
+                        <div class="hierarchy-box">
+                            <div class="hierarchy-title">クラマネ</div>
+                            <div class="hierarchy-member-slot" 
+                                ondrop="handleDrop(event)" 
+                                ondragover="handleDragOver(event)" 
+                                ondragleave="handleDragLeave(event)">
+                                <div class="member-info empty">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>メンバーをドロップ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第2階層：事業部長 -->
+                    <div class="hierarchy-department" data-id="pos-2-1" data-parent="pos-1-1" data-role="事業部長">
+                        <div class="department-header">
+                            <h3>事業部長</h3>
+                        </div>
+                        <div class="department-content"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)">
+                            <div class="department-placeholder">
+                                <i class="fas fa-user-plus"></i>
+                                <span>メンバーをドロップ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第3階層：事業部長管轄のセクション -->
+                    <div class="hierarchy-sections" data-parent="pos-2-1">
+                        <div class="hierarchy-item level-3" data-id="pos-3-1" data-parent="pos-2-1">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-1')">
+                                    <span class="section-name-text" id="section-name-pos-3-1">事業部長 管轄</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-1')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-2" data-parent="pos-2-1">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-2')">
+                                    <span class="section-name-text" id="section-name-pos-3-2">セクション1</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-2')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-3" data-parent="pos-2-1">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-3')">
+                                    <span class="section-name-text" id="section-name-pos-3-3">セクション2</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-3')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add-section" onclick="addSection('pos-2-1')">
+                            <i class="fas fa-plus"></i> セクション追加
+                        </button>
+                    </div>
+
+                    <!-- 第2階層：スタマネ -->
+                    <div class="hierarchy-department" data-id="pos-2-2" data-parent="pos-1-1" data-role="スタマネ">
+                        <div class="department-header">
+                            <h3>スタマネ</h3>
+                        </div>
+                        <div class="department-content"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)">
+                            <div class="department-placeholder">
+                                <i class="fas fa-user-plus"></i>
+                                <span>メンバーをドロップ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 第3階層：スタマネ管轄のセクション -->
+                    <div class="hierarchy-sections" data-parent="pos-2-2">
+                        <div class="hierarchy-item level-3" data-id="pos-3-4" data-parent="pos-2-2">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-4')">
+                                    <span class="section-name-text" id="section-name-pos-3-4">スタマネ 管轄</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-4')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-5" data-parent="pos-2-2">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-5')">
+                                    <span class="section-name-text" id="section-name-pos-3-5">セクション3</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-5')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-6" data-parent="pos-2-2">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-6')">
+                                    <span class="section-name-text" id="section-name-pos-3-6">セクション4</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-6')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add-section" onclick="addSection('pos-2-2')">
+                            <i class="fas fa-plus"></i> セクション追加
+                        </button>
+                    </div>
+
+                    <!-- 第2階層：アドマネ -->
+                    <div class="hierarchy-department" data-id="pos-2-3" data-parent="pos-1-1" data-role="アドマネ">
+                        <div class="department-header">
+                            <h3>アドマネ</h3>
+                        </div>
+                        <div class="department-content"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)">
+                            <div class="department-placeholder">
+                                <i class="fas fa-user-plus"></i>
+                                <span>メンバーをドロップ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第3階層：アドマネ管轄のセクション -->
+                    <div class="hierarchy-sections" data-parent="pos-2-3">
+                        <div class="hierarchy-item level-3" data-id="pos-3-7" data-parent="pos-2-3">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-7')">
+                                    <span class="section-name-text" id="section-name-pos-3-7">アドマネ 管轄</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-7')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-8" data-parent="pos-2-3">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-8')">
+                                    <span class="section-name-text" id="section-name-pos-3-8">セクション5</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-8')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-9" data-parent="pos-2-3">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-9')">
+                                    <span class="section-name-text" id="section-name-pos-3-9">セクション6</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-9')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add-section" onclick="addSection('pos-2-3')">
+                            <i class="fas fa-plus"></i> セクション追加
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右側：メンバー配置エリア -->
+                <div class="org-members-area">
+                    <!-- 第1階層：クラマネのメンバー表示 -->
+                    <div class="members-row level-1" data-target="pos-1-1">
+                        <div class="members-container" id="members-pos-1-1"></div>
+                    </div>
+
+                    <!-- 第2階層：事業部長のメンバー表示 -->
+                    <div class="members-row level-2" data-target="pos-2-1">
+                        <div class="members-container" id="members-pos-2-1"></div>
+                    </div>
+
+                    <!-- 第3階層：事業部長管轄のセクション -->
+                    <div class="members-row level-3" data-target="pos-3-1">
+                        <div class="members-container" 
+                            id="members-pos-3-1"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-2">
+                        <div class="members-container" 
+                            id="members-pos-3-2"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-3">
+                        <div class="members-container" 
+                            id="members-pos-3-3"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+
+                    <!-- 第2階層：スタマネのメンバー表示 -->
+                    <div class="members-row level-2" data-target="pos-2-2">
+                        <div class="members-container" id="members-pos-2-2"></div>
+                    </div>
+
+                    <!-- 第3階層：スタマネ管轄のセクション -->
+                    <div class="members-row level-3" data-target="pos-3-4">
+                        <div class="members-container" 
+                            id="members-pos-3-4"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-5">
+                        <div class="members-container" 
+                            id="members-pos-3-5"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-6">
+                        <div class="members-container" 
+                            id="members-pos-3-6"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+
+                    <!-- 第2階層：アドマネのメンバー表示 -->
+                    <div class="members-row level-2" data-target="pos-2-3">
+                        <div class="members-container" id="members-pos-2-3"></div>
+                    </div>
+
+                    <!-- 第3階層：アドマネ管轄のセクション -->
+                    <div class="members-row level-3" data-target="pos-3-7">
+                        <div class="members-container" 
+                            id="members-pos-3-7"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-8">
+                        <div class="members-container" 
+                            id="members-pos-3-8"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-9">
+                        <div class="members-container" 
+                            id="members-pos-3-9"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未配置メンバープール -->
+            <div class="member-pool-horizontal">
+                <div class="pool-section-horizontal">
+                    <h3><i class="fas fa-users"></i> 未配置メンバー</h3>
+                    <div id="unassignedPool" class="pool-content-horizontal" 
+                        ondrop="handleDrop(event)" 
+                        ondragover="handleDragOver(event)" 
+                        ondragleave="handleDragLeave(event)">
+                        <!-- メンバーカードが動的に生成される -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 人事配置タブ -->
+        <div class="tab-content" id="tab-composition">
+            <!-- 学年・会員区分マトリクス -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-table"></i> 学年・会員区分別構成</h3>
+                </div>
+                <div class="card-body">
+                    <table class="composition-table">
+                        <thead>
+                            <tr>
+                                <th>学年</th>
+                                <th>メンバー会員</th>
+                                <th>スタッフ会員</th>
+                                <th>合計</th>
+                        <!-- 事業部長 -->
+                        <div class="layer-group">
+                            <div class="position-box" data-layer="2" data-id="pos-2-1" data-parent="pos-1-1" data-role="事業部長" draggable="false">
+                                <div class="position-title">事業部長</div>
+                                <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                    <div class="member-info empty">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>メンバーをドロップ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 事業部長の管轄枠 -->
+                            <div class="jurisdiction-frame" data-parent="pos-2-1">
+                                <div class="jurisdiction-title">事業部長 管轄</div>
+                                <div class="jurisdiction-content" id="jurisdiction-pos-2-1">
+                                    <!-- 初期3ポジション -->
+                                    <div class="position-box" data-layer="3" data-id="pos-3-1" data-parent="pos-2-1" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-1')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-1"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-1')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-2" data-parent="pos-2-1" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-2')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-2"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-2')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-3" data-parent="pos-2-1" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-3')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-3"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-3')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-add-in-jurisdiction" onclick="addPositionToJurisdiction('pos-2-1')" title="ポジション追加">
+                                    <i class="fas fa-plus"></i> ポジション追加
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- スタマネ -->
+                        <div class="layer-group">
+                            <div class="position-box" data-layer="2" data-id="pos-2-2" data-parent="pos-1-1" data-role="スタマネ" draggable="false">
+                                <div class="position-title">スタマネ</div>
+                                <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                    <div class="member-info empty">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>メンバーをドロップ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- スタマネの管轄枠 -->
+                            <div class="jurisdiction-frame" data-parent="pos-2-2">
+                                <div class="jurisdiction-title">スタマネ 管轄</div>
+                                <div class="jurisdiction-content" id="jurisdiction-pos-2-2">
+                                    <!-- 初期3ポジション -->
+                                    <div class="position-box" data-layer="3" data-id="pos-3-4" data-parent="pos-2-2" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-4')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-4"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-4')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-5" data-parent="pos-2-2" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-5')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-5"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-5')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-6" data-parent="pos-2-2" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-6')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-6"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-6')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-add-in-jurisdiction" onclick="addPositionToJurisdiction('pos-2-2')" title="ポジション追加">
+                                    <i class="fas fa-plus"></i> ポジション追加
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- アドマネ -->
+                        <div class="layer-group">
+                            <div class="position-box" data-layer="2" data-id="pos-2-3" data-parent="pos-1-1" data-role="アドマネ" draggable="false">
+                                <div class="position-title">アドマネ</div>
+                                <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                    <div class="member-info empty">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>メンバーをドロップ</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- アドマネの管轄枠 -->
+                            <div class="jurisdiction-frame" data-parent="pos-2-3">
+                                <div class="jurisdiction-title">アドマネ 管轄</div>
+                                <div class="jurisdiction-content" id="jurisdiction-pos-2-3">
+                                    <!-- 初期3ポジション -->
+                                    <div class="position-box" data-layer="3" data-id="pos-3-7" data-parent="pos-2-3" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-7')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-7"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-7')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-8" data-parent="pos-2-3" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-8')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-8"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-8')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="position-box" data-layer="3" data-id="pos-3-9" data-parent="pos-2-3" draggable="false">
+                                        <div class="section-name-badge" onclick="editSectionName('pos-3-9')" title="セクション名を編集">
+                                            <span class="section-name-text" id="section-name-pos-3-9"></span>
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <button class="btn-delete" onclick="deletePosition('pos-3-9')" title="削除">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="box-content" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                                            <div class="member-info empty">
+                                                <i class="fas fa-user-plus"></i>
+                                                <span>メンバーをドロップ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-add-in-jurisdiction" onclick="addPositionToJurisdiction('pos-2-3')" title="ポジション追加">
+                                    <i class="fas fa-plus"></i> ポジション追加
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未配置メンバープール -->
+            <div class="member-pool-horizontal">
+                <div class="pool-section-horizontal">
+                    <h3><i class="fas fa-users"></i> 未配置メンバー</h3>
+                    <div id="unassignedPool" class="pool-content-horizontal" 
+                        ondrop="handleDrop(event)" 
+                        ondragover="handleDragOver(event)" 
+                        ondragleave="handleDragLeave(event)">
+                        <!-- メンバーカードが動的に生成される -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 人事配置タブ -->
+        <div class="tab-content" id="tab-composition">
+            <!-- 学年・会員区分マトリクス -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-table"></i> 学年・会員区分別構成</h3>
+                </div>
+                <div class="card-body">
+                    <table class="composition-table">
+                        <thead>
+                            <tr>
+                                <th>学年</th>
+                                <th>メンバー会員</th>
+                                <th>スタッフ会員</th>
+                                <th>合計</th>
+                            </tr>
+                        </thead>
+                        <tbody id="compositionTableBody">
+                            <!-- JavaScriptで生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 班長配置状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> 班長配置状況</h3>
+                </div>
+                <div class="card-body">
+                    <div class="squad-leaders-grid">
+                        <!-- スタッフ班長 -->
+                        <div class="leader-section">
+                            <h4><i class="fas fa-star"></i> スタッフ班長</h4>
+                            <div id="staffLeadersList" class="leaders-list">
+                                <!-- JavaScriptで生成 -->
+                            </div>
+                        </div>
+
+                        <!-- メンバー班長 -->
+                        <div class="leader-section">
+                            <h4><i class="fas fa-user-friends"></i> メンバー班長</h4>
+                            <div id="memberLeadersList" class="leaders-list">
+                                <!-- JavaScriptで生成 -->
+                            </div>
+                        </div>
+
+                        <!-- 班長未配属 -->
+                        <div class="leader-section">
+                            <h4><i class="fas fa-user-slash"></i> 班長未配属</h4>
+                            <div id="noSquadMembersList" class="leaders-list">
+                                <!-- JavaScriptで生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 参加状況タブ -->
+        <div class="tab-content" id="tab-participation">
+            <!-- 事業参加状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-briefcase"></i> 事業参加状況</h3>
+                </div>
+                <div class="card-body">
+                    <div class="participation-grid">
+                        <!-- 本部事業 -->
+                        <div class="participation-item">
+                            <h4>本部事業参加</h4>
+                            <div class="participation-stats">
+                                <div class="stat-circle" data-percentage="72">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45"></circle>
+                                        <circle cx="50" cy="50" r="45" class="progress-ring"></circle>
+                                    </svg>
+                                    <div class="stat-text">
+                                        <span class="percentage">72%</span>
+                                        <span class="label">参加率</span>
+                                    </div>
+                                </div>
+                                <div class="stat-details">
+                                    <p><strong>参加者:</strong> <span id="hqParticipants">32</span>名 / 45名</p>
+                                    <p><strong>平均参加数:</strong> <span id="avgHqProjects">3.2</span>件/年</p>
+                                    <p style="margin-top: 12px;">
+                                        <a href="club-participation-detail.html?type=hq" class="btn btn-sm btn-outline">
+                                            <i class="fas fa-list"></i> 詳細を見る
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- クラブ事業 -->
+                        <div class="participation-item">
+                            <h4>クラブ事業参加</h4>
+                            <div class="participation-stats">
+                                <div class="stat-circle" data-percentage="85">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45"></circle>
+                                        <circle cx="50" cy="50" r="45" class="progress-ring"></circle>
+                                    </svg>
+                                    <div class="stat-text">
+                                        <span class="percentage">85%</span>
+                                        <span class="label">参加率</span>
+                                    </div>
+                                </div>
+                                <div class="stat-details">
+                                    <p><strong>参加者:</strong> <span id="clubParticipants">38</span>名 / 45名</p>
+                                    <p><strong>平均参加数:</strong> <span id="avgClubEvents">5.8</span>件/年</p>
+                                    <p style="margin-top: 12px;">
+                                        <a href="club-participation-detail.html?type=club" class="btn btn-sm btn-outline">
+                                            <i class="fas fa-list"></i> 詳細を見る
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- クラブ会参加状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-alt"></i> クラブ会参加状況（月別）</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="clubMeetingChart" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 研修状況タブ -->
+        <div class="tab-content" id="tab-training">
+            <!-- メンバー会員研修状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-friends"></i> メンバー会員の研修受講状況</h3>
+                </div>
+                <div class="card-body">
+                    <div class="training-section">
+                        <h4>スタートアップ研修</h4>
+                        <div class="training-progress">
+                            <div class="progress-bar-large">
+                                <div class="progress-fill-large" id="startupProgressBar" style="width: 89%;"></div>
+                            </div>
+                            <p class="progress-text" id="startupProgressText">受講済: <strong>24名</strong> / 未受講: <strong>3名</strong> （89%完了）</p>
+                        </div>
+                        <div class="member-badges">
+                            <div class="badge-group">
+                                <div class="group-header" onclick="toggleBadgeGroup('startupCompletedList')">
+                                    <span class="group-label">
+                                        <i class="fas fa-chevron-right toggle-icon" id="startupCompletedList-icon"></i>
+                                        受講済: <strong id="startupCompletedCount">0</strong>名
+                                    </span>
+                                </div>
+                                <div class="badges-list collapsed" id="startupCompletedList">
+                                    <!-- JavaScriptで生成 -->
+                                </div>
+                            </div>
+                            <div class="badge-group">
+                                <div class="group-header" onclick="toggleBadgeGroup('startupIncompleteList')">
+                                    <span class="group-label">
+                                        <i class="fas fa-chevron-right toggle-icon" id="startupIncompleteList-icon"></i>
+                                        未受講: <strong id="startupIncompleteCount">0</strong>名
+                                    </span>
+                                </div>
+                                <div class="badges-list collapsed" id="startupIncompleteList">
+                                    <!-- JavaScriptで生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="training-section">
+                        <h4>スタッフ研修受講済メンバー会員 <span class="flag-badge">要確認</span></h4>
+                        <p class="section-note">以下のメンバー会員はスタッフ研修を受講していますが、会員区分がメンバーのままです。</p>
+                        <div class="member-badges">
+                            <div class="badge-group">
+                                <div class="group-header" onclick="toggleBadgeGroup('staffTrainedMembersList')">
+                                    <span class="group-label">
+                                        <i class="fas fa-chevron-down toggle-icon" id="staffTrainedMembersList-icon"></i>
+                                        該当者: <strong id="staffTrainedMembersCount">0</strong>名
+                                    </span>
+                                </div>
+                                <div class="badges-list" id="staffTrainedMembersList">
+                                    <!-- JavaScriptで生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- スタッフ会員研修状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-tie"></i> スタッフ会員の研修受講状況</h3>
+                </div>
+                <div class="card-body">
+                    <div class="training-section">
+                        <h4>スタッフ研修</h4>
+                        <div class="training-progress">
+                            <div class="progress-bar-large">
+                                <div class="progress-fill-large" id="staffProgressBar" style="width: 72%;"></div>
+                            </div>
+                            <p class="progress-text" id="staffProgressText">受講済: <strong>13名</strong> / 未受講: <strong>5名</strong> （72%完了）</p>
+                        </div>
+                        <div class="member-badges">
+                            <div class="badge-group">
+                                <div class="group-header" onclick="toggleBadgeGroup('staffTrainingCompletedList')">
+                                    <span class="group-label">
+                                        <i class="fas fa-chevron-right toggle-icon" id="staffTrainingCompletedList-icon"></i>
+                                        受講済: <strong id="staffTrainingCompletedCount">0</strong>名
+                                    </span>
+                                </div>
+                                <div class="badges-list collapsed" id="staffTrainingCompletedList">
+                                    <!-- JavaScriptで生成 -->
+                                </div>
+                            </div>
+                            <div class="badge-group">
+                                <div class="group-header" onclick="toggleBadgeGroup('staffTrainingIncompleteList')">
+                                    <span class="group-label">
+                                        <i class="fas fa-chevron-right toggle-icon" id="staffTrainingIncompleteList-icon"></i>
+                                        未受講: <strong id="staffTrainingIncompleteCount">0</strong>名
+                                    </span>
+                                </div>
+                                <div class="badges-list collapsed" id="staffTrainingIncompleteList">
+                                    <!-- JavaScriptで生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- モーダル: ポジション編集 -->
+    <div class="modal" id="modalEditPosition">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-edit"></i> ポジション編集</h3>
+                    <button class="modal-close" onclick="closeModal('modalEditPosition')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditPosition">
+                        <input type="hidden" id="editPositionId">
+                        
+                        <div class="form-group">
+                            <label for="editPositionName">
+                                <i class="fas fa-tag"></i> ポジション名
+                                <span class="required-mark">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="editPositionName" 
+                                placeholder="例: グループマネージャーC"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPositionLevel">
+                                <i class="fas fa-layer-group"></i> 階層
+                            </label>
+                            <select class="form-control" id="editPositionLevel">
+                                <option value="1">第一階層</option>
+                                <option value="2">第二階層</option>
+                                <option value="3">第三階層</option>
+                                <option value="4">第四階層</option>
+                            </select>
+                            <small class="form-text">第一階層は変更できません</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPositionParent">
+                                <i class="fas fa-sitemap"></i> 親ポジション
+                            </label>
+                            <select class="form-control" id="editPositionParent">
+                                <option value="">なし</option>
+                                <!-- JavaScriptで生成 -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPositionMember">
+                                <i class="fas fa-user"></i> 担当者
+                            </label>
+                            <select class="form-control" id="editPositionMember">
+                                <option value="">未配置</option>
+                                <!-- JavaScriptで生成 -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalEditPosition')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="savePositionEdit()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: メンバー選択 -->
+    <div class="modal" id="modalAssignMember">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-plus"></i> メンバーを選択</h3>
+                    <button class="modal-close" onclick="closeModal('modalAssignMember')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAssignMember">
+                        <input type="hidden" id="assignPositionId">
+                        
+                        <div class="form-group">
+                            <label>ポジション</label>
+                            <p class="form-text" id="assignPositionTitle" style="font-weight: 600; color: var(--primary-color);"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="assignMemberId">
+                                <i class="fas fa-user"></i> 担当者を選択
+                            </label>
+                            <select class="form-control" id="assignMemberId">
+                                <option value="">未配置</option>
+                                <!-- JavaScriptで生成 -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalAssignMember')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveAssignment()">
+                        <i class="fas fa-save"></i> 配置
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 管理者用Relation追加 -->
+    <div class="modal" id="modalManagementRelation">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-shield"></i> 管理者としてRelationを追加</h3>
+                <button class="modal-close" onclick="closeModal('modalManagementRelation')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="managementRelationForm">
+                    <!-- 対象メンバー選択 -->
+                    <div class="form-group">
+                        <label for="managementTargetUserId">
+                            <i class="fas fa-user"></i> 対象メンバー <span class="required">*</span>
+                        </label>
+                        <select class="form-control" id="managementTargetUserId" required>
+                            <option value="">メンバーを選択してください...</option>
+                            <!-- 動的に生成される -->
+                        </select>
+                        <small class="form-text">このメンバーのRelationを登録します</small>
+                    </div>
+
+                    <!-- つながり相手検索 -->
+                    <div class="form-group">
+                        <label for="managementRelatedPersonSearch">
+                            <i class="fas fa-search"></i> つながり相手を検索 <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="managementRelatedPersonSearch" 
+                            placeholder="名前で検索..." oninput="searchRelatedPersonForManagement()" required>
+                        <div class="search-results" id="managementSearchResults" style="display: none;">
+                            <!-- 検索結果が動的に生成される -->
+                        </div>
+                        <input type="hidden" id="managementRelatedPersonId">
+                        <input type="hidden" id="managementRelatedPersonName">
+                    </div>
+
+                    <!-- カテゴリー選択 -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-tag"></i> カテゴリー <span class="required">*</span>
+                        </label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="managementCategory" value="club" onchange="updateManagementContextFields()" required>
+                                <span>クラブ</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="managementCategory" value="project" onchange="updateManagementContextFields()">
+                                <span>プロジェクト</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="managementCategory" value="other" onchange="updateManagementContextFields()">
+                                <span>その他</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 関係性選択 -->
+                    <div class="form-group">
+                        <label for="managementRelationType">
+                            <i class="fas fa-link"></i> 関係性 <span class="required">*</span>
+                        </label>
+                        <select class="form-control" id="managementRelationType" required>
+                            <option value="">選択してください...</option>
+                            <option value="same_pt">同じPT</option>
+                            <option value="same_team">同じ班</option>
+                            <option value="mentor">メンター</option>
+                            <option value="mentee">メンティー</option>
+                            <option value="colleague">同期</option>
+                            <option value="friend">友達</option>
+                            <option value="other">その他</option>
+                        </select>
+                    </div>
+
+                    <!-- コンテキスト情報（クラブ・プロジェクト選択時） -->
+                    <div id="managementContextFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="managementActivityName">
+                                <i class="fas fa-building"></i> 活動名
+                            </label>
+                            <input type="text" class="form-control" id="managementActivityName" 
+                                placeholder="例: 東京クラブ、熊本地震支援プロジェクト">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group" style="flex: 2;">
+                                <label for="managementRole">
+                                    <i class="fas fa-user-tag"></i> 役割
+                                </label>
+                                <input type="text" class="form-control" id="managementRole" 
+                                    placeholder="例: PT、班長">
+                            </div>
+
+                            <div class="form-group" style="flex: 1;">
+                                <label for="managementYear">
+                                    <i class="fas fa-calendar"></i> 年度
+                                </label>
+                                <input type="number" class="form-control" id="managementYear" 
+                                    placeholder="2024" min="2020" max="2030">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PT・班メンバーの判定情報 -->
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-users"></i> メンバーシップ判定
+                        </label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="managementIsPtMember">
+                                <span>同じPTのメンバーである</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="managementIsTeamMember">
+                                <span>同じ班のメンバーである</span>
+                            </label>
+                        </div>
+                        <small class="form-text">
+                            <i class="fas fa-info-circle"></i> 
+                            チェックした場合、対象メンバーに承認通知が送信されます
+                        </small>
+                    </div>
+
+                    <!-- 備考 -->
+                    <div class="form-group">
+                        <label for="managementNotes">
+                            <i class="fas fa-sticky-note"></i> 備考（任意）
+                        </label>
+                        <textarea class="form-control" id="managementNotes" rows="3" 
+                            placeholder="例: プロジェクトでの協力関係が良好、リーダーシップを発揮している"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modalManagementRelation')">
+                    キャンセル
+                </button>
+                <button class="btn btn-primary" onclick="saveManagementRelation()">
+                    <i class="fas fa-save"></i> 登録
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/club.js"></script>
+    <script src="js/club-relations.js"></script>
+    <script src="js/org-chart-new.js"></script>
+</body>
+</html>

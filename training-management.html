@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>研修管理 - IVUSA人事タレントマネジメントシステム</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/training-management.css">
+    <link rel="stylesheet" href="css/video-upload.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-users"></i> <span>IVUSA</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>自分ページ</span>
+            </a>
+            <a href="club.html" class="nav-item">
+                <i class="fas fa-users-cog"></i>
+                <span>クラブ管理</span>
+            </a>
+            <a href="project.html" class="nav-item">
+                <i class="fas fa-project-diagram"></i>
+                <span>プロジェクト管理</span>
+            </a>
+            <a href="org-chart.html" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>本部管理</span>
+            </a>
+            <a href="talent-search.html" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>人材検索</span>
+            </a>
+            <a href="training.html" class="nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>研修メニュー</span>
+            </a>
+            <a href="training-management.html" class="nav-item active">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>研修管理</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-chalkboard-teacher"></i> 研修管理</h2>
+                <div class="header-info">
+                    <span class="info-badge"><i class="fas fa-user-shield"></i> スタッフ会員権限</span>
+                </div>
+            </div>
+            <div class="club-selector">
+                <label for="selectClub"><i class="fas fa-filter"></i> クラブを選択：</label>
+                <select id="selectClub" class="form-control" onchange="changeClub()">
+                    <option value="tokyo">東京クラブ</option>
+                    <option value="osaka">大阪クラブ</option>
+                    <option value="nagoya">名古屋クラブ</option>
+                    <option value="fukuoka">福岡クラブ</option>
+                    <option value="all">全体</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- タブナビゲーション -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="club">
+                <i class="fas fa-users"></i> クラブ
+            </button>
+            <button class="tab-btn" data-tab="project">
+                <i class="fas fa-project-diagram"></i> プロジェクト
+            </button>
+            <button class="tab-btn" data-tab="headquarters">
+                <i class="fas fa-building"></i> 本部
+            </button>
+        </div>
+
+        <!-- クラブタブ -->
+        <div class="tab-content active" id="tab-club">
+            <!-- 役職者別必須研修受講状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-tie"></i> 役職者別必須研修受講状況</h3>
+                    <p class="section-note">役職についているメンバーの必須研修受講状況を確認できます</p>
+                </div>
+                <div class="card-body">
+                    <!-- フィルター・検索 -->
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <input type="checkbox" id="filterIncomplete" checked>
+                                <span>未完了者のみ表示</span>
+                            </label>
+                            <label class="filter-label">
+                                <input type="checkbox" id="showAllMembers">
+                                <span>全メンバー表示</span>
+                            </label>
+                        </div>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchMembers" placeholder="氏名で検索...">
+                        </div>
+                    </div>
+
+                    <div id="positionTrainingStatus" class="position-training-accordion">
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 基礎研修別受講状況 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-bar"></i> 基礎研修別受講状況（学年別）</h3>
+                    <p class="section-note">各基礎研修の学年別受講状況を確認できます</p>
+                </div>
+                <div class="card-body">
+                    <canvas id="basicTrainingChart" height="288"></canvas>
+                </div>
+            </div>
+
+            <!-- 全体統計 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> 研修受講統計</h3>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid" id="trainingStats">
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- プロジェクトタブ -->
+        <div class="tab-content" id="tab-project">
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-project-diagram"></i> プロジェクト研修管理</h3>
+                </div>
+                <div class="card-body">
+                    <div style="padding: 40px; text-align: center; color: var(--text-muted);">
+                        <i class="fas fa-tools" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <p style="font-size: 1.1rem;">プロジェクト研修管理機能は準備中です</p>
+                        <p style="font-size: 0.9rem; margin-top: 8px;">今後のアップデートで実装予定です</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 本部タブ -->
+        <div class="tab-content" id="tab-headquarters">
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-building"></i> 本部研修管理</h3>
+                </div>
+                <div class="card-body">
+                    <div style="padding: 40px; text-align: center; color: var(--text-muted);">
+                        <i class="fas fa-tools" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <p style="font-size: 1.1rem;">本部研修管理機能は準備中です</p>
+                        <p style="font-size: 0.9rem; margin-top: 8px;">今後のアップデートで実装予定です</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- モーダル: 動画アップロード -->
+    <div class="modal" id="modalUploadVideo">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-upload"></i> 動画をアップロード</h3>
+                    <button class="modal-close" onclick="closeModal('modalUploadVideo')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formUploadVideo">
+                        <!-- ステップ1: YouTube URL入力 -->
+                        <div class="upload-step" id="step1">
+                            <h4><i class="fab fa-youtube"></i> ステップ1: YouTube動画のURLを入力</h4>
+                            
+                            <div class="form-group">
+                                <label for="youtubeUrl">
+                                    YouTube動画のURL <span class="required-mark">*</span>
+                                </label>
+                                <input type="url" id="youtubeUrl" class="form-control" 
+                                       placeholder="https://www.youtube.com/watch?v=..." 
+                                       required>
+                                <p class="form-hint">
+                                    <i class="fas fa-info-circle"></i> 
+                                    YouTubeの動画ページのURLをコピーして貼り付けてください<br>
+                                    例: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+                                </p>
+                            </div>
+                            
+                            <button type="button" class="btn btn-secondary" onclick="loadYoutubePreview()">
+                                <i class="fas fa-eye"></i> プレビューを表示
+                            </button>
+                            
+                            <!-- YouTube プレビュー -->
+                            <div id="youtubePreviewArea" style="display: none; margin-top: 24px;">
+                                <div class="youtube-preview-container">
+                                    <div class="youtube-embed">
+                                        <iframe id="youtubePreview" 
+                                                width="100%" 
+                                                height="400" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <div class="video-info">
+                                        <p><strong>動画ID:</strong> <span id="youtubeVideoId"></span></p>
+                                        <p id="youtubeDurationInfo" style="display: none;"><strong>長さ:</strong> <span id="youtubeDuration"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ステップ2: 基本情報入力 -->
+                        <div class="upload-step" id="step2" style="display: none;">
+                            <h4><i class="fas fa-info-circle"></i> ステップ2: 基本情報を入力</h4>
+                            
+                            <div class="form-group">
+                                <label for="videoTitle">
+                                    動画タイトル <span class="required-mark">*</span>
+                                </label>
+                                <input type="text" id="videoTitle" class="form-control" required placeholder="例: リーダーシップ基礎">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="videoDescription">説明</label>
+                                <textarea id="videoDescription" class="form-control" rows="3" placeholder="この研修動画の内容を説明してください"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="videoLevel">レベル</label>
+                                    <select id="videoLevel" class="form-control">
+                                        <option value="初級">初級</option>
+                                        <option value="中級">中級</option>
+                                        <option value="上級">上級</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoCategory">カテゴリ</label>
+                                    <select id="videoCategory" class="form-control">
+                                        <option value="リーダーシップ">リーダーシップ</option>
+                                        <option value="コミュニケーション">コミュニケーション</option>
+                                        <option value="マネジメント">マネジメント</option>
+                                        <option value="チームワーク">チームワーク</option>
+                                        <option value="その他">その他</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoManualDuration">
+                                        動画の長さ（秒） <span class="required-mark">*</span>
+                                    </label>
+                                    <input type="number" id="videoManualDuration" class="form-control" 
+                                           placeholder="例: 600（10分）" min="1" required>
+                                    <small class="form-hint">YouTubeの動画の長さを秒数で入力してください</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ステップ3: チャプター設定 -->
+                        <div class="upload-step" id="step3" style="display: none;">
+                            <h4><i class="fas fa-list"></i> ステップ3: チャプターを設定</h4>
+                            
+                            <!-- 自動生成オプション -->
+                            <div class="chapter-auto-generate">
+                                <h5><i class="fas fa-magic"></i> 自動生成</h5>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="chapterCount">チャプター数</label>
+                                        <input type="number" id="chapterCount" class="form-control" value="5" min="2" max="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-secondary" onclick="autoGenerateChapters()">
+                                            <i class="fas fa-magic"></i> 自動生成
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="form-hint">動画を等間隔に分割してチャプターを自動生成します。生成後に編集可能です。</p>
+                            </div>
+                            
+                            <!-- チャプターリスト -->
+                            <div class="chapter-editor">
+                                <div class="chapter-editor-header">
+                                    <h5>チャプター一覧</h5>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="addChapterManually()">
+                                        <i class="fas fa-plus"></i> 手動で追加
+                                    </button>
+                                </div>
+                                
+                                <div id="chapterEditorList" class="chapter-list-editor">
+                                    <!-- チャプターが動的に追加されます -->
+                                    <p class="empty-message">チャプターがまだありません。自動生成または手動で追加してください。</p>
+                                </div>
+                            </div>
+                            
+                            <!-- YouTube プレビュー（チャプター設定用） -->
+                            <div class="chapter-preview-video">
+                                <h5>動画プレビュー（時間確認用）</h5>
+                                <div class="youtube-embed">
+                                    <iframe id="chapterPreviewYoutube" 
+                                            width="100%" 
+                                            height="300" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>
+                                </div>
+                                <p class="form-hint">
+                                    <i class="fas fa-info-circle"></i> 
+                                    YouTubeプレイヤーで動画を再生し、時間を確認してください。時間はチャプター一覧で手動入力できます。
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btnPrevStep" onclick="prevStep()" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> 戻る
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('modalUploadVideo')">
+                        キャンセル
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnNextStep" onclick="nextStep()">
+                        次へ <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSaveVideo" onclick="saveVideo()" style="display: none;">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/training-management.js?v=3"></script>
+    <script src="js/video-upload.js"></script>
+</body>
+</html>

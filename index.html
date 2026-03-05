@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自分ページ - IVUSA人事タレントマネジメントシステム</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/connections.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-users"></i> IVUSA人事</h1>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="mypage">
+                <i class="fas fa-user"></i>
+                <span>自分ページ</span>
+            </a>
+            <a href="club.html" class="nav-item">
+                <i class="fas fa-users-cog"></i>
+                <span>クラブ管理</span>
+            </a>
+            <a href="project.html" class="nav-item">
+                <i class="fas fa-project-diagram"></i>
+                <span>プロジェクト管理</span>
+            </a>
+            <a href="#" class="nav-item" data-page="headquarters">
+                <i class="fas fa-building"></i>
+                <span>本部管理</span>
+            </a>
+            <a href="talent-search.html" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>人材検索</span>
+            </a>
+            <a href="training.html" class="nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>研修メニュー</span>
+            </a>
+            <a href="training-management.html" class="nav-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>研修管理</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="currentUserName">田中 優希</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <!-- マイページ -->
+        <div class="page" id="page-mypage">
+            <div class="page-header">
+                <h2><i class="fas fa-user"></i> 自分ページ</h2>
+                <p>あなたのプロフィールと活動記録を管理します</p>
+            </div>
+
+            <!-- プロフィールサマリー -->
+            <section class="profile-summary">
+                <div class="profile-avatar">
+                    <div class="avatar-circle">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <button class="btn-edit-avatar" title="写真を変更">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h3 id="profileName">田中 優希</h3>
+                    <p class="profile-meta">
+                        <span><i class="fas fa-graduation-cap"></i> 2年生</span>
+                        <span><i class="fas fa-users"></i> クラブA</span>
+                        <span><i class="fas fa-calendar"></i> 入会日: 2023年4月</span>
+                    </p>
+                    <div class="profile-tags">
+                        <span class="tag tag-primary"><i class="fas fa-leaf"></i> 環境保全</span>
+                        <span class="tag tag-success"><i class="fas fa-hands-helping"></i> 災害復興</span>
+                        <span class="tag tag-info"><i class="fas fa-city"></i> 地域活性化</span>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">PJ参加</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">バッジ</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">4.3</div>
+                            <div class="stat-label">満足度</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- タブナビゲーション -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="basic-info">
+                    <i class="fas fa-id-card"></i> 基本情報
+                </button>
+                <button class="tab-btn" data-tab="competency">
+                    <i class="fas fa-chart-radar"></i> 能力評価
+                </button>
+                <button class="tab-btn" data-tab="activities">
+                    <i class="fas fa-history"></i> 活動記録
+                </button>
+                <button class="tab-btn" data-tab="goals">
+                    <i class="fas fa-bullseye"></i> 目標管理
+                </button>
+                <button class="tab-btn" data-tab="reflections">
+                    <i class="fas fa-journal-whills"></i> 振り返り
+                </button>
+            </div>
+
+            <!-- 基本情報タブ -->
+            <div class="tab-content active" id="tab-basic-info">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-id-card"></i> 基本情報</h3>
+                        <button class="btn btn-primary btn-sm" id="btnEditBasicInfo">
+                            <i class="fas fa-edit"></i> 編集
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-grid">
+                            <!-- IVUSA入会動機 -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-heart"></i> IVUSA入会動機</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('joinMotivation')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="joinMotivation">
+                                    <p class="info-text">大学生活で社会貢献活動に取り組みたいと考え、ボランティア活動を通じて成長できる環境を求めていました。</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">社会貢献</span>
+                                        <span class="keyword-tag">ボランティア</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 高校時代に頑張っていたこと -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-school"></i> 高校時代に頑張っていたこと</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('highSchoolEfforts')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="highSchoolEfforts">
+                                    <p class="info-text">生徒会活動とボランティア部に所属し、地域清掃活動や文化祭の企画運営を行いました。</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">生徒会</span>
+                                        <span class="keyword-tag">ボランティア</span>
+                                        <span class="keyword-tag">清掃活動</span>
+                                        <span class="keyword-tag">文化祭</span>
+                                        <span class="keyword-tag">企画</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 興味のある活動分野 -->
+                            <div class="info-item full-width">
+                                <label>
+                                    <span><i class="fas fa-compass"></i> 興味のある活動分野</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('interestFields')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="interestFields">
+                                    <div class="interest-list">
+                                        <div class="interest-item">
+                                            <div class="interest-header">
+                                                <span class="interest-name">環境保全</span>
+                                                <div class="interest-rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <span class="rating-value">4/5</span>
+                                                </div>
+                                            </div>
+                                            <p class="interest-episode">高校時代から環境問題に関心があり、地域の清掃活動に参加してきました。特に海洋プラスチック問題に強い関心を持っています。</p>
+                                        </div>
+                                        <div class="interest-item">
+                                            <div class="interest-header">
+                                                <span class="interest-name">災害復興</span>
+                                                <div class="interest-rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <span class="rating-value">5/5</span>
+                                                </div>
+                                            </div>
+                                            <p class="interest-episode">被災地支援活動に参加した経験から、困っている人を支援する活動に強いやりがいを感じています。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 頑張りたいこと -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-fire"></i> 頑張りたいこと</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('aspirations')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="aspirations">
+                                    <p class="info-text">プロジェクトのリーダーとして、チームをまとめる力を身につけたいです。</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">リーダー</span>
+                                        <span class="keyword-tag">チームワーク</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 身につけたいこと -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-lightbulb"></i> 身につけたいこと</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('skillsToAcquire')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="skillsToAcquire">
+                                    <p class="info-text">コミュニケーション能力、課題解決力、プロジェクトマネジメントスキル</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">コミュニケーション</span>
+                                        <span class="keyword-tag">問題解決</span>
+                                        <span class="keyword-tag">マネジメント</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 克服したいこと -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-mountain"></i> 克服したいこと</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('challengesToOvercome')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="challengesToOvercome">
+                                    <p class="info-text">人前で話すときの緊張、計画を立てるのが苦手なところ</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">発表</span>
+                                        <span class="keyword-tag">計画</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 特技・好きなこと -->
+                            <div class="info-item">
+                                <label>
+                                    <span><i class="fas fa-star"></i> 特技・好きなこと</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('hobbiesAndSkills')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="hobbiesAndSkills">
+                                    <p class="info-text">写真撮影、イラスト制作、アウトドア活動</p>
+                                    <div class="keyword-tags">
+                                        <span class="keyword-tag">写真</span>
+                                        <span class="keyword-tag">イラスト</span>
+                                        <span class="keyword-tag">アウトドア</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 資格 -->
+                            <div class="info-item full-width">
+                                <label>
+                                    <span><i class="fas fa-certificate"></i> 資格</span>
+                                    <button class="btn-edit-item" onclick="editSingleItem('certifications')" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="certifications">
+                                    <div class="certification-list">
+                                        <span class="certification-badge">普通自動車免許</span>
+                                        <span class="certification-badge">TOEIC 750点</span>
+                                        <span class="certification-badge">応急手当普及員</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 希望する関わり方 -->
+                            <div class="info-item full-width">
+                                <label>
+                                    <span><i class="fas fa-handshake"></i> 希望する関わり方</span>
+                                    <button class="btn-edit-item" onclick="openInvolvementModal()" title="編集">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </label>
+                                <div class="info-content" id="involvementPreferences">
+                                    <!-- タブナビゲーション -->
+                                    <div class="involvement-tabs-view">
+                                        <button type="button" class="involvement-tab-view active" data-tab="club">
+                                            <i class="fas fa-users-cog"></i> クラブ
+                                        </button>
+                                        <button type="button" class="involvement-tab-view" data-tab="project">
+                                            <i class="fas fa-project-diagram"></i> プロジェクト
+                                        </button>
+                                        <button type="button" class="involvement-tab-view" data-tab="hq">
+                                            <i class="fas fa-building"></i> 本部組織
+                                        </button>
+                                    </div>
+
+                                    <div class="involvement-preferences">
+                                        <!-- クラブでの関わり方 -->
+                                        <div class="preference-section" id="viewTabContentClub">
+                                            <div class="involvement-options">
+                                                <p style="color: var(--text-muted); text-align: center; padding: 20px;">評価を設定してください</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- プロジェクトでの関わり方 -->
+                                        <div class="preference-section" id="viewTabContentProject" style="display: none;">
+                                            <div class="involvement-options">
+                                                <p style="color: var(--text-muted); text-align: center; padding: 20px;">評価を設定してください</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- 本部組織での関わり方 -->
+                                        <div class="preference-section" id="viewTabContentHq" style="display: none;">
+                                            <div class="involvement-options">
+                                                <p style="color: var(--text-muted); text-align: center; padding: 20px;">評価を設定してください</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Relation -->
+                            <div class="info-item full-width">
+                                <label>
+                                    <span><i class="fas fa-project-diagram"></i> Relation</span>
+                                    <button class="btn-edit-item" onclick="openAddRelationModal()" title="追加">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </label>
+                                
+                                <!-- 承認待ち通知（コンパクト） -->
+                                <div class="relation-approval-banner" id="relationApprovalBanner" style="display: none;">
+                                    <i class="fas fa-bell"></i>
+                                    <span><strong id="approvalCount">0</strong>件の承認待ち</span>
+                                    <button class="btn-link" onclick="showApprovalModal()">確認する</button>
+                                </div>
+
+                                <!-- Relationタブ -->
+                                <div class="relation-tabs">
+                                    <button class="relation-tab active" data-tab="club" onclick="switchRelationTab('club')">
+                                        <i class="fas fa-users-cog"></i> クラブ <span class="tab-count" id="clubCount">0</span>
+                                    </button>
+                                    <button class="relation-tab" data-tab="project" onclick="switchRelationTab('project')">
+                                        <i class="fas fa-project-diagram"></i> プロジェクト <span class="tab-count" id="projectCount">0</span>
+                                    </button>
+                                    <button class="relation-tab" data-tab="other" onclick="switchRelationTab('other')">
+                                        <i class="fas fa-user-friends"></i> その他 <span class="tab-count" id="otherCount">0</span>
+                                    </button>
+                                </div>
+
+                                <!-- Relationコンテンツ -->
+                                <div class="relation-tab-content active" id="tabContentClub">
+                                    <div class="relation-list" id="relationListClub">
+                                        <!-- 動的に生成される -->
+                                    </div>
+                                </div>
+
+                                <div class="relation-tab-content" id="tabContentProject">
+                                    <div class="relation-list" id="relationListProject">
+                                        <!-- 動的に生成される -->
+                                    </div>
+                                </div>
+
+                                <div class="relation-tab-content" id="tabContentOther">
+                                    <div class="relation-list" id="relationListOther">
+                                        <!-- 動的に生成される -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 能力評価タブ -->
+            <div class="tab-content" id="tab-competency">
+                <!-- 最新の評価セクション -->
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="header-title-group">
+                            <h3><i class="fas fa-star"></i> 最新の能力評価</h3>
+                            <p class="card-description">現在の自己評価と他者評価</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm" id="btnAddCompetencyEvaluation">
+                            <i class="fas fa-plus"></i> 自己評価を追加
+                        </button>
+                    </div>
+                    <div class="card-body compact-card-body">
+                        <div class="competency-legend compact-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: rgba(59, 130, 246, 0.7);"></span>
+                                <span>自己評価</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: rgba(16, 185, 129, 0.7);"></span>
+                                <span>他者評価</span>
+                            </div>
+                        </div>
+                        
+                        <!-- レーダーチャート（全幅） -->
+                        <div class="competency-radar-section">
+                            <canvas id="competencyRadarChart" style="max-height: 400px;"></canvas>
+                        </div>
+                        
+                        <!-- カテゴリ別セクション -->
+                        <div class="competency-categories">
+                            <!-- 前に踏み出す力 -->
+                            <div class="competency-category-section">
+                                <div class="category-divider-large">前に踏み出す力（アクション）</div>
+                                <div class="category-content">
+                                    <div class="category-bars">
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">主体性</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 80%;">4</div>
+                                                <div class="bar-mini bar-other" style="width: 70%;">3.5</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">働きかけ力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 60%;">3</div>
+                                                <div class="bar-mini bar-other" style="width: 80%;">4</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">実行力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 70%;">3.5</div>
+                                                <div class="bar-mini bar-other" style="width: 80%;">4</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category-episodes">
+                                        <h5><i class="fas fa-comment-dots"></i> エピソード</h5>
+                                        <div class="category-episodes-content" id="episodesAction">
+                                            <p class="no-data-message">評価データがありません</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 考え抜く力 -->
+                            <div class="competency-category-section">
+                                <div class="category-divider-large">考え抜く力（シンキング）</div>
+                                <div class="category-content">
+                                    <div class="category-bars">
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">課題発見力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 60%;">3</div>
+                                                <div class="bar-mini bar-other" style="width: 70%;">3.5</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">計画力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 50%;">2.5</div>
+                                                <div class="bar-mini bar-other" style="width: 60%;">3</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">創造力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 80%;">4</div>
+                                                <div class="bar-mini bar-other" style="width: 80%;">4</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category-episodes">
+                                        <h5><i class="fas fa-comment-dots"></i> エピソード</h5>
+                                        <div class="category-episodes-content" id="episodesThinking">
+                                            <p class="no-data-message">評価データがありません</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- チームで働く力 -->
+                            <div class="competency-category-section">
+                                <div class="category-divider-large">チームで働く力（チームワーク）</div>
+                                <div class="category-content">
+                                    <div class="category-bars">
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">発信力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 50%;">2.5</div>
+                                                <div class="bar-mini bar-other" style="width: 70%;">3.5</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">傾聴力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 80%;">4</div>
+                                                <div class="bar-mini bar-other" style="width: 90%;">4.5</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">柔軟性</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 70%;">3.5</div>
+                                                <div class="bar-mini bar-other" style="width: 80%;">4</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">情況把握力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 70%;">3.5</div>
+                                                <div class="bar-mini bar-other" style="width: 80%;">4</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">規律性</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 90%;">4.5</div>
+                                                <div class="bar-mini bar-other" style="width: 90%;">4.5</div>
+                                            </div>
+                                        </div>
+                                        <div class="competency-bar-item">
+                                            <span class="bar-label">ストレスコントロール力</span>
+                                            <div class="bar-container">
+                                                <div class="bar-mini bar-self" style="width: 60%;">3</div>
+                                                <div class="bar-mini bar-other" style="width: 70%;">3.5</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category-episodes">
+                                        <h5><i class="fas fa-comment-dots"></i> エピソード</h5>
+                                        <div class="category-episodes-content" id="episodesTeamwork">
+                                            <p class="no-data-message">評価データがありません</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 比較評価セクション -->
+                <div class="section-card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> 評価の比較</h3>
+                    </div>
+                    <div class="card-body compact-card-body">
+                        <!-- 比較条件選択 -->
+                        <div class="comparison-controls compact-controls">
+                            <div class="comparison-group">
+                                <h4><i class="fas fa-circle" style="color: rgba(59, 130, 246, 0.7);"></i> 比較対象1</h4>
+                                <div class="comparison-selects">
+                                    <div class="form-group">
+                                        <label>年度</label>
+                                        <select class="form-select" id="comparison1Year">
+                                            <option value="2025">2025年度</option>
+                                            <option value="2026">2026年度</option>
+                                            <option value="2027">2027年度</option>
+                                            <option value="2028">2028年度</option>
+                                            <option value="2029">2029年度</option>
+                                            <option value="2030">2030年度</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>評価タイプ</label>
+                                        <select class="form-select" id="comparison1Type">
+                                            <option value="self">自己評価</option>
+                                            <option value="other">他者評価</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comparison-group">
+                                <h4><i class="fas fa-circle" style="color: rgba(16, 185, 129, 0.7);"></i> 比較対象2</h4>
+                                <div class="comparison-selects">
+                                    <div class="form-group">
+                                        <label>年度</label>
+                                        <select class="form-select" id="comparison2Year">
+                                            <option value="2025">2025年度</option>
+                                            <option value="2026">2026年度</option>
+                                            <option value="2027" selected>2027年度</option>
+                                            <option value="2028">2028年度</option>
+                                            <option value="2029">2029年度</option>
+                                            <option value="2030">2030年度</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>評価タイプ</label>
+                                        <select class="form-select" id="comparison2Type">
+                                            <option value="self">自己評価</option>
+                                            <option value="other">他者評価</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-sm" id="btnUpdateComparison">
+                                <i class="fas fa-sync-alt"></i> グラフを更新
+                            </button>
+                        </div>
+
+                        <!-- 比較グラフエリア -->
+                        <div class="comparison-chart-container compact-chart-container">
+                            <canvas id="comparisonRadarChart" style="max-height: 400px;"></canvas>
+                        </div>
+
+                        <!-- 比較サマリー -->
+                        <div class="comparison-summary compact-summary" id="comparisonSummary">
+                            <h4><i class="fas fa-info-circle"></i> 比較サマリー</h4>
+                            <p class="text-muted">グラフを更新すると、選択した2つの評価の差分が表示されます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活動記録タブ -->
+            <div class="tab-content" id="tab-activities">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> 活動記録と振り返り</h3>
+                        <div class="filter-group">
+                            <select class="form-select" id="activityTypeFilter">
+                                <option value="">すべての活動</option>
+                                <option value="project">プロジェクト</option>
+                                <option value="training">研修</option>
+                                <option value="club">クラブ活動</option>
+                            </select>
+                            <select class="form-select" id="activityYearFilter">
+                                <option value="">全年度</option>
+                                <option value="2025">2025年度</option>
+                                <option value="2026">2026年度</option>
+                                <option value="2027">2027年度</option>
+                                <option value="2028">2028年度</option>
+                                <option value="2029">2029年度</option>
+                                <option value="2030">2030年度</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- 活動と振り返りのフロー説明 -->
+                        <div class="flow-info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>活動から振り返りまでの流れ</strong>
+                                <div class="flow-steps">
+                                    <div class="flow-step">
+                                        <div class="flow-icon"><i class="fas fa-user-check"></i></div>
+                                        <span>1. 活動に参加</span>
+                                    </div>
+                                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                    <div class="flow-step">
+                                        <div class="flow-icon"><i class="fas fa-pen"></i></div>
+                                        <span>2. 振り返りを作成</span>
+                                    </div>
+                                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                    <div class="flow-step">
+                                        <div class="flow-icon"><i class="fas fa-chart-line"></i></div>
+                                        <span>3. 成長を記録</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-timeline">
+                            <!-- タイムライン項目のサンプル -->
+                            <div class="timeline-item">
+                                <div class="timeline-marker project">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>災害復興支援プロジェクト 2024春</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2024年3月15日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-primary">スタッフ</span>
+                                            <span class="badge badge-success"><i class="fas fa-check-circle"></i> 振り返り完了</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>被災地A地区</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 50名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 4.0/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り完了状態 -->
+                                    <div class="reflection-status completed">
+                                        <div class="status-header">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Gibbsのリフレクションサイクル完了</span>
+                                        </div>
+                                        <div class="status-details">
+                                            <span class="status-badge">6/6ステップ記述済み</span>
+                                            <span class="status-badge">能力評価済み（4項目）</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-outline" onclick="viewReflectionDetailModal('activity-1')">
+                                            <i class="fas fa-eye"></i> 振り返りを見る
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-1')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker training">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>リーダーシップ研修</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2024年2月10日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-info">研修</span>
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> 振り返り未記入</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-building"></i>
+                                                <span>対面研修</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>3時間</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-certificate"></i>
+                                                <span>評価スコア 85点</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り未記入状態 -->
+                                    <div class="reflection-status pending">
+                                        <div class="status-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span>振り返りを追加して学びを記録しましょう</span>
+                                        </div>
+                                        <div class="reflection-prompt">
+                                            <p>この研修から得た気づきや今後のアクションプランを記録することで、成長を可視化できます。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-primary" onclick="addReflection('training-1')">
+                                            <i class="fas fa-plus"></i> 振り返りを追加
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('training-1')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker project">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>環境保全プロジェクト 2023冬</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2023年12月8日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-info">参加者</span>
+                                            <span class="badge badge-success"><i class="fas fa-check-circle"></i> 振り返り完了</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>○○海岸</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 30名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 5.0/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り完了状態（参加者） -->
+                                    <div class="reflection-status completed">
+                                        <div class="status-header">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Gibbsのリフレクションサイクル完了</span>
+                                        </div>
+                                        <div class="status-details">
+                                            <span class="status-badge">6/6ステップ記述済み</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-outline" onclick="viewReflectionDetailModal('activity-2')">
+                                            <i class="fas fa-eye"></i> 振り返りを見る
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-2')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker project">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>地域活性化プロジェクト 2024夏</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2024年7月20日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-primary">スタッフ</span>
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> 振り返り未記入</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>○○市商店街</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 35名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 4.5/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り未記入状態（スタッフ） -->
+                                    <div class="reflection-status pending">
+                                        <div class="status-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span>振り返りを追加して学びを記録しましょう</span>
+                                        </div>
+                                        <div class="reflection-prompt">
+                                            <p>スタッフとして参加したこの活動から、Gibbsのリフレクションサイクルと能力評価（5段階）を記録できます。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-primary" onclick="addReflection('activity-staff-1')">
+                                            <i class="fas fa-plus"></i> 振り返りを追加
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-staff-1')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="timeline-marker club">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>クラブ合宿 2024春</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2024年4月5日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-info">参加者</span>
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> 振り返り未記入</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>△△研修センター</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 20名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 4.8/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り未記入状態（参加者） -->
+                                    <div class="reflection-status pending">
+                                        <div class="status-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span>振り返りを追加して学びを記録しましょう</span>
+                                        </div>
+                                        <div class="reflection-prompt">
+                                            <p>この活動から得た気づきや今後のアクションプランをGibbsのリフレクションサイクルで記録できます。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-primary" onclick="addReflection('activity-participant-1')">
+                                            <i class="fas fa-plus"></i> 振り返りを追加
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-participant-1')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 追加サンプル1: 参加者・未記入（国際協力プロジェクト） -->
+                            <div class="timeline-item">
+                                <div class="timeline-marker project">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>国際協力プロジェクト 2024新春</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2024年1月28日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-info">参加者</span>
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> 振り返り未記入</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>カンボジア</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 25名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 4.7/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り未記入状態（参加者） -->
+                                    <div class="reflection-status pending">
+                                        <div class="status-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span>振り返りを追加して学びを記録しましょう</span>
+                                        </div>
+                                        <div class="reflection-prompt">
+                                            <p>国際協力活動から得た気づきや異文化理解の学びをGibbsのリフレクションサイクルで記録しましょう。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-primary" onclick="addReflection('activity-participant-2')">
+                                            <i class="fas fa-plus"></i> 振り返りを追加
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-participant-2')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 追加サンプル2: スタッフ・未記入（子ども支援プロジェクト） -->
+                            <div class="timeline-item">
+                                <div class="timeline-marker project">
+                                    <i class="fas fa-child"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <div class="timeline-title-group">
+                                            <h4>子ども学習支援プロジェクト 2023秋</h4>
+                                            <span class="timeline-date"><i class="fas fa-calendar"></i> 2023年10月15日</span>
+                                        </div>
+                                        <div class="timeline-status">
+                                            <span class="badge badge-primary">スタッフ</span>
+                                            <span class="badge badge-warning"><i class="fas fa-clock"></i> 振り返り未記入</span>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-details">
+                                        <div class="detail-grid">
+                                            <div class="detail-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>○○学習支援センター</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>参加者 18名</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <i class="fas fa-star" style="color: #fbbf24;"></i>
+                                                <span>満足度 4.3/5.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 振り返り未記入状態（スタッフ） -->
+                                    <div class="reflection-status pending">
+                                        <div class="status-header">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span>振り返りを追加して学びを記録しましょう</span>
+                                        </div>
+                                        <div class="reflection-prompt">
+                                            <p>スタッフとして参加したこの活動から、Gibbsのリフレクションサイクルと能力評価（5段階）を記録できます。チーム運営や課題解決の経験を振り返りましょう。</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="timeline-actions">
+                                        <button class="btn btn-sm btn-primary" onclick="addReflection('activity-staff-2')">
+                                            <i class="fas fa-plus"></i> 振り返りを追加
+                                        </button>
+                                        <button class="btn btn-sm btn-outline" onclick="viewActivityDetail('activity-staff-2')">
+                                            <i class="fas fa-info-circle"></i> 活動詳細
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 目標管理タブ -->
+            <div class="tab-content" id="tab-goals">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bullseye"></i> 目標管理</h3>
+                        <div class="header-actions">
+                            <select class="form-select" id="goalYearFilter">
+                                <option value="">全年度</option>
+                                <option value="2025">2025年度</option>
+                                <option value="2026">2026年度</option>
+                                <option value="2027">2027年度</option>
+                                <option value="2028">2028年度</option>
+                                <option value="2029">2029年度</option>
+                                <option value="2030">2030年度</option>
+                            </select>
+                            <button class="btn btn-primary btn-sm" id="btnAddGoal">
+                                <i class="fas fa-plus"></i> 新しい目標を追加
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="goals-container">
+                            <!-- 長期目標 -->
+                            <div class="goal-section">
+                                <div class="goal-section-header">
+                                    <h4><i class="fas fa-mountain"></i> 長期目標（1年以上）</h4>
+                                    <span class="goal-count">2件</span>
+                                </div>
+                                <div class="goal-list">
+                                    <div class="goal-card">
+                                        <div class="goal-header">
+                                            <div class="goal-title">
+                                                <h5>プロジェクトマネージャーとして活躍する</h5>
+                                                <span class="goal-period">2024年4月 - 2025年3月</span>
+                                            </div>
+                                            <div class="goal-progress">
+                                                <span class="progress-text">35%</span>
+                                            </div>
+                                        </div>
+                                        <div class="goal-progress-bar">
+                                            <div class="progress-fill" style="width: 35%;"></div>
+                                        </div>
+                                        <p class="goal-description">
+                                            プロジェクトのリーダーシップスキルを磨き、複数のプロジェクトでマネージャーとして活動できるようになる。
+                                        </p>
+                                        <div class="goal-tags">
+                                            <span class="tag tag-primary">リーダーシップ</span>
+                                            <span class="tag tag-info">マネジメント</span>
+                                        </div>
+                                        <div class="goal-actions">
+                                            <button class="btn btn-sm btn-outline" onclick="editGoal('goal-1')">
+                                                <i class="fas fa-edit"></i> 編集
+                                            </button>
+                                            <button class="btn btn-sm btn-outline" onclick="viewGoalDetail('goal-1')">
+                                                <i class="fas fa-chart-line"></i> 詳細
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="goal-card">
+                                        <div class="goal-header">
+                                            <div class="goal-title">
+                                                <h5>能力評価の平均スコア4.0以上を達成</h5>
+                                                <span class="goal-period">2024年4月 - 2025年3月</span>
+                                            </div>
+                                            <div class="goal-progress">
+                                                <span class="progress-text">60%</span>
+                                            </div>
+                                        </div>
+                                        <div class="goal-progress-bar">
+                                            <div class="progress-fill" style="width: 60%;"></div>
+                                        </div>
+                                        <p class="goal-description">
+                                            12の能力要素すべてで平均4.0以上の評価を得られるよう、継続的にスキルアップを図る。
+                                        </p>
+                                        <div class="goal-tags">
+                                            <span class="tag tag-success">スキル向上</span>
+                                            <span class="tag tag-warning">能力開発</span>
+                                        </div>
+                                        <div class="goal-actions">
+                                            <button class="btn btn-sm btn-outline" onclick="editGoal('goal-2')">
+                                                <i class="fas fa-edit"></i> 編集
+                                            </button>
+                                            <button class="btn btn-sm btn-outline" onclick="viewGoalDetail('goal-2')">
+                                                <i class="fas fa-chart-line"></i> 詳細
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 中期目標 -->
+                            <div class="goal-section">
+                                <div class="goal-section-header">
+                                    <h4><i class="fas fa-flag"></i> 中期目標（3ヶ月〜1年）</h4>
+                                    <span class="goal-count">3件</span>
+                                </div>
+                                <div class="goal-list">
+                                    <div class="goal-card">
+                                        <div class="goal-header">
+                                            <div class="goal-title">
+                                                <h5>スタッフとして5つのプロジェクトに参加</h5>
+                                                <span class="goal-period">2024年4月 - 2024年9月</span>
+                                            </div>
+                                            <div class="goal-progress">
+                                                <span class="progress-text">40%</span>
+                                            </div>
+                                        </div>
+                                        <div class="goal-progress-bar">
+                                            <div class="progress-fill" style="width: 40%;"></div>
+                                        </div>
+                                        <p class="goal-description">
+                                            様々な分野のプロジェクトにスタッフとして参加し、運営経験を積む。
+                                        </p>
+                                        <div class="goal-tags">
+                                            <span class="tag tag-primary">経験値アップ</span>
+                                        </div>
+                                        <div class="goal-actions">
+                                            <button class="btn btn-sm btn-outline">
+                                                <i class="fas fa-edit"></i> 編集
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 短期目標 -->
+                            <div class="goal-section">
+                                <div class="goal-section-header">
+                                    <h4><i class="fas fa-check-circle"></i> 短期目標（〜3ヶ月）</h4>
+                                    <span class="goal-count">4件</span>
+                                </div>
+                                <div class="goal-list">
+                                    <div class="goal-card goal-completed">
+                                        <div class="goal-header">
+                                            <div class="goal-title">
+                                                <h5>リーダーシップ研修の受講</h5>
+                                                <span class="goal-period">2024年1月 - 2024年2月</span>
+                                            </div>
+                                            <div class="goal-progress">
+                                                <span class="progress-text"><i class="fas fa-check"></i> 完了</span>
+                                            </div>
+                                        </div>
+                                        <div class="goal-progress-bar">
+                                            <div class="progress-fill complete" style="width: 100%;"></div>
+                                        </div>
+                                        <p class="goal-description">
+                                            基本的なリーダーシップスキルを学ぶための研修を受講完了。
+                                        </p>
+                                        <div class="goal-tags">
+                                            <span class="tag tag-success">完了</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="goal-card">
+                                        <div class="goal-header">
+                                            <div class="goal-title">
+                                                <h5>計画力を高めるための実践</h5>
+                                                <span class="goal-period">2024年3月 - 2024年5月</span>
+                                            </div>
+                                            <div class="goal-progress">
+                                                <span class="progress-text">70%</span>
+                                            </div>
+                                        </div>
+                                        <div class="goal-progress-bar">
+                                            <div class="progress-fill" style="width: 70%;"></div>
+                                        </div>
+                                        <p class="goal-description">
+                                            次回のプロジェクトで詳細な計画書を作成し、実行する。
+                                        </p>
+                                        <div class="goal-tags">
+                                            <span class="tag tag-warning">進行中</span>
+                                        </div>
+                                        <div class="goal-actions">
+                                            <button class="btn btn-sm btn-outline">
+                                                <i class="fas fa-edit"></i> 編集
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 振り返りタブ -->
+            <div class="tab-content" id="tab-reflections">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-journal-whills"></i> 振り返り記録</h3>
+                        <div class="header-actions">
+                            <select class="form-select" id="reflectionYearFilter">
+                                <option value="">全年度</option>
+                                <option value="2025">2025年度</option>
+                                <option value="2026">2026年度</option>
+                                <option value="2027">2027年度</option>
+                                <option value="2028">2028年度</option>
+                                <option value="2029">2029年度</option>
+                                <option value="2030">2030年度</option>
+                            </select>
+                            <button class="btn btn-primary btn-sm" id="btnCreateReflection">
+                                <i class="fas fa-plus"></i> 新しい振り返りを作成
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="reflection-info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Gibbsのリフレクションサイクル</strong>を使用して、活動を振り返ります。
+                                <p>6つのステップで経験を深く分析し、次の成長につなげましょう。</p>
+                            </div>
+                        </div>
+
+                        <div class="reflections-list">
+                            <!-- 振り返り項目サンプル -->
+                            <div class="reflection-card">
+                                <div class="reflection-header">
+                                    <div class="reflection-title">
+                                        <h4>災害復興支援プロジェクト 2024春の振り返り</h4>
+                                        <span class="reflection-date">
+                                            <i class="fas fa-calendar"></i> 2024年3月20日
+                                        </span>
+                                    </div>
+                                    <div class="reflection-meta">
+                                        <span class="badge badge-primary">スタッフ</span>
+                                        <span class="badge badge-success">完了</span>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-summary">
+                                    <div class="gibbs-steps-preview">
+                                        <div class="step-preview">
+                                            <i class="fas fa-clipboard-check"></i>
+                                            <span>記述完了 6/6</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-highlights">
+                                    <div class="highlight-item">
+                                        <strong>気づき:</strong>
+                                        <p>チームメンバーとのコミュニケーションの重要性を実感しました。</p>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <strong>次のアクション:</strong>
+                                        <p>定期的なミーティングの設定と、進捗の可視化を実践します。</p>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-competencies">
+                                    <strong>評価した能力要素:</strong>
+                                    <div class="competency-tags">
+                                        <span class="tag">主体性 4.0</span>
+                                        <span class="tag">実行力 4.0</span>
+                                        <span class="tag">課題発見力 3.5</span>
+                                        <span class="tag">傾聴力 4.5</span>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-actions">
+                                    <button class="btn btn-sm btn-outline" onclick="viewReflectionDetail('ref-1')">
+                                        <i class="fas fa-eye"></i> 詳細を見る
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="editReflection('ref-1')">
+                                        <i class="fas fa-edit"></i> 編集
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="exportReflection('ref-1')">
+                                        <i class="fas fa-download"></i> エクスポート
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="reflection-card">
+                                <div class="reflection-header">
+                                    <div class="reflection-title">
+                                        <h4>環境保全プロジェクト 2023冬の振り返り</h4>
+                                        <span class="reflection-date">
+                                            <i class="fas fa-calendar"></i> 2023年12月15日
+                                        </span>
+                                    </div>
+                                    <div class="reflection-meta">
+                                        <span class="badge badge-info">参加者</span>
+                                        <span class="badge badge-success">完了</span>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-summary">
+                                    <div class="gibbs-steps-preview">
+                                        <div class="step-preview">
+                                            <i class="fas fa-clipboard-check"></i>
+                                            <span>記述完了 6/6</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-highlights">
+                                    <div class="highlight-item">
+                                        <strong>気づき:</strong>
+                                        <p>環境問題への取り組みに深い充実感を感じました。</p>
+                                    </div>
+                                    <div class="highlight-item">
+                                        <strong>次のアクション:</strong>
+                                        <p>環境分野のプロジェクトに継続的に参加し、専門性を高めます。</p>
+                                    </div>
+                                </div>
+
+                                <div class="reflection-actions">
+                                    <button class="btn btn-sm btn-outline" onclick="viewReflectionDetail('ref-2')">
+                                        <i class="fas fa-eye"></i> 詳細を見る
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="editReflection('ref-2')">
+                                        <i class="fas fa-edit"></i> 編集
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 他のページのプレースホルダー -->
+        <div class="page" id="page-clubs" style="display: none;">
+            <div class="page-header">
+                <h2><i class="fas fa-users-cog"></i> クラブ管理</h2>
+            </div>
+            <div class="section-card">
+                <div class="card-body">
+                    <p>クラブ管理ページは開発中です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-projects" style="display: none;">
+            <div class="page-header">
+                <h2><i class="fas fa-project-diagram"></i> プロジェクト管理</h2>
+            </div>
+            <div class="section-card">
+                <div class="card-body">
+                    <p>プロジェクト管理ページは開発中です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-headquarters" style="display: none;">
+            <div class="page-header">
+                <h2><i class="fas fa-building"></i> 本部管理</h2>
+            </div>
+            <div class="section-card">
+                <div class="card-body">
+                    <p>本部管理ページは開発中です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-training-menu" style="display: none;">
+            <div class="page-header">
+                <h2><i class="fas fa-book-open"></i> 研修メニュー</h2>
+            </div>
+            <div class="section-card">
+                <div class="card-body">
+                    <p>研修メニューページは開発中です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-search" style="display: none;">
+            <div class="page-header">
+                <h2><i class="fas fa-search"></i> 人材検索</h2>
+            </div>
+            <div class="section-card">
+                <div class="card-body">
+                    <p>人材検索ページは開発中です。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+        </div>
+    </main>
+
+    <!-- モーダル: 基本情報編集 -->
+    <div class="modal" id="modalEditBasicInfo">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-edit"></i> 基本情報の編集</h3>
+                    <button class="modal-close" onclick="closeModal('modalEditBasicInfo')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditBasicInfo">
+                        <div class="form-group">
+                            <label for="inputJoinMotivation">
+                                <i class="fas fa-heart"></i> IVUSA入会動機
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputJoinMotivation" 
+                                rows="3"
+                                placeholder="IVUSA入会動機を入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsJoinMotivation"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputHighSchoolEfforts">
+                                <i class="fas fa-school"></i> 高校時代に頑張っていたこと
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputHighSchoolEfforts" 
+                                rows="3"
+                                placeholder="高校時代に頑張っていたことを入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsHighSchoolEfforts"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-compass"></i> 興味のある活動分野</label>
+                            <div id="interestFieldsEditor">
+                                <div class="interest-editor-item">
+                                    <input type="text" class="form-control" placeholder="分野名（例：環境保全）" value="環境保全">
+                                    <div class="rating-selector">
+                                        <label>興味度:</label>
+                                        <div class="star-rating-input">
+                                            <i class="fas fa-star" data-value="1"></i>
+                                            <i class="fas fa-star" data-value="2"></i>
+                                            <i class="fas fa-star" data-value="3"></i>
+                                            <i class="fas fa-star" data-value="4"></i>
+                                            <i class="fas fa-star" data-value="5"></i>
+                                        </div>
+                                    </div>
+                                    <textarea class="form-control" rows="2" placeholder="エピソードを記述してください（任意）"></textarea>
+                                    <button type="button" class="btn-remove-interest"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline btn-sm" id="btnAddInterestField">
+                                <i class="fas fa-plus"></i> 分野を追加
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAspirations">
+                                <i class="fas fa-fire"></i> 頑張りたいこと
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputAspirations" 
+                                rows="3"
+                                placeholder="頑張りたいことを入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsAspirations"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputSkillsToAcquire">
+                                <i class="fas fa-lightbulb"></i> 身につけたいこと
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputSkillsToAcquire" 
+                                rows="3"
+                                placeholder="身につけたいことを入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsSkillsToAcquire"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputChallengesToOvercome">
+                                <i class="fas fa-mountain"></i> 克服したいこと
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputChallengesToOvercome" 
+                                rows="3"
+                                placeholder="克服したいことを入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsChallengesToOvercome"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputHobbiesAndSkills">
+                                <i class="fas fa-star"></i> 特技・好きなこと
+                            </label>
+                            <textarea 
+                                class="form-control auto-tag-input" 
+                                id="inputHobbiesAndSkills" 
+                                rows="3"
+                                placeholder="特技・好きなことを入力してください"
+                            ></textarea>
+                            <div class="keyword-tags-container" id="tagsHobbiesAndSkills"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputCertifications">
+                                <i class="fas fa-certificate"></i> 資格
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="inputCertifications" 
+                                placeholder="資格を入力（カンマ区切り）"
+                            >
+                            <small class="form-text">例: 普通自動車免許, TOEIC 750点, 応急手当普及員</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalEditBasicInfo')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveBasicInfo()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: Gibbs振り返り作成 -->
+    <div class="modal" id="modalGibbsReflection">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-journal-whills"></i> Gibbsのリフレクションサイクル</h3>
+                    <button class="modal-close" onclick="closeModal('modalGibbsReflection')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="gibbs-cycle-info">
+                        <p>6つのステップで活動を振り返り、学びを深めましょう。</p>
+                    </div>
+
+                    <form id="formGibbsReflection">
+                        <!-- 活動選択 -->
+                        <div class="form-group">
+                            <label><i class="fas fa-project-diagram"></i> 振り返る活動</label>
+                            <select class="form-control" id="selectReflectionActivity" required onchange="toggleOtherActivityFields()">
+                                <option value="">活動を選択してください</option>
+                                <option value="activity-1">災害復興支援プロジェクト 2024春</option>
+                                <option value="training-1">リーダーシップ研修</option>
+                                <option value="activity-staff-1">地域活性化プロジェクト 2024夏</option>
+                                <option value="activity-participant-1">クラブ合宿 2024春</option>
+                                <option value="activity-2">環境保全プロジェクト 2023冬</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+
+                        <!-- その他の活動詳細（条件付き表示） -->
+                        <div id="otherActivityFields" style="display: none;">
+                            <div class="form-group">
+                                <label><i class="fas fa-edit"></i> 活動名</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="otherActivityName" 
+                                    placeholder="例: 個人的なボランティア活動"
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-calendar"></i> 活動日</label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="otherActivityDate"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- 役割選択 -->
+                        <div class="form-group">
+                            <label><i class="fas fa-user-tag"></i> あなたの役割</label>
+                            <select class="form-control" id="selectReflectionRole" required>
+                                <option value="">役割を選択してください</option>
+                                <option value="participant">参加者</option>
+                                <option value="staff">スタッフ</option>
+                                <option value="manager">マネージャー</option>
+                            </select>
+                        </div>
+
+                        <!-- Gibbsの6ステップ -->
+                        <div class="gibbs-steps">
+                            <!-- Step 1: Description -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">1</span>
+                                    <h4>Description (記述)</h4>
+                                    <p class="step-description">何が起こりましたか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsDescription"
+                                    placeholder="活動の内容や状況を客観的に記述してください"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Step 2: Feelings -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">2</span>
+                                    <h4>Feelings (感情)</h4>
+                                    <p class="step-description">どう感じましたか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsFeelings"
+                                    placeholder="活動中や活動後に感じたことを記述してください"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Step 3: Evaluation -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">3</span>
+                                    <h4>Evaluation (評価)</h4>
+                                    <p class="step-description">何が良く、何が悪かったですか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsEvaluation"
+                                    placeholder="活動のポジティブな面とネガティブな面を評価してください"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Step 4: Analysis -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">4</span>
+                                    <h4>Analysis (分析)</h4>
+                                    <p class="step-description">なぜそうなったのですか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsAnalysis"
+                                    placeholder="状況の原因や背景を分析してください"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Step 5: Conclusion -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">5</span>
+                                    <h4>Conclusion (結論)</h4>
+                                    <p class="step-description">何を学びましたか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsConclusion"
+                                    placeholder="この経験から得た学びや気づきを記述してください"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <!-- Step 6: Action Plan -->
+                            <div class="gibbs-step">
+                                <div class="step-header">
+                                    <span class="step-number">6</span>
+                                    <h4>Action Plan (行動計画)</h4>
+                                    <p class="step-description">次はどうしますか？</p>
+                                </div>
+                                <textarea 
+                                    class="form-control" 
+                                    rows="4" 
+                                    id="gibbsActionPlan"
+                                    placeholder="今後の行動や改善策を具体的に記述してください"
+                                    required
+                                ></textarea>
+                                <div class="form-check" style="margin-top: 10px;">
+                                    <input type="checkbox" class="form-check-input" id="checkAddToGoals">
+                                    <label class="form-check-label" for="checkAddToGoals">
+                                        この行動計画を目標として自動登録する
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- スタッフ/マネージャー用: 能力評価 -->
+                        <div id="competencyEvaluationSection" style="display: none;">
+                            <div class="section-divider">
+                                <h4><i class="fas fa-chart-bar"></i> 能力の自己評価</h4>
+                                <p>この活動を通じて発揮できた能力を評価してください</p>
+                            </div>
+
+                            <div class="competency-evaluation-grid">
+                                <!-- 前に踏み出す力（アクション） -->
+                                <div class="competency-category-header">
+                                    <h5><i class="fas fa-arrow-right"></i> 前に踏み出す力（アクション）</h5>
+                                </div>
+                                
+                                <div class="competency-eval-item">
+                                    <label>主体性</label>
+                                    <select class="form-control form-control-sm" data-competency="initiative">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="initiative"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>働きかけ力</label>
+                                    <select class="form-control form-control-sm" data-competency="persistence">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="persistence"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>実行力</label>
+                                    <select class="form-control form-control-sm" data-competency="resilience">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="resilience"></textarea>
+                                </div>
+
+                                <!-- 考え抜く力（シンキング） -->
+                                <div class="competency-category-header">
+                                    <h5><i class="fas fa-lightbulb"></i> 考え抜く力（シンキング）</h5>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>課題発見力</label>
+                                    <select class="form-control form-control-sm" data-competency="problemSolving">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="problemSolving"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>計画力</label>
+                                    <select class="form-control form-control-sm" data-competency="planning">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="planning"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>創造力</label>
+                                    <select class="form-control form-control-sm" data-competency="creativity">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="creativity"></textarea>
+                                </div>
+
+                                <!-- チームで働く力（チームワーク） -->
+                                <div class="competency-category-header">
+                                    <h5><i class="fas fa-users"></i> チームで働く力（チームワーク）</h5>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>発信力</label>
+                                    <select class="form-control form-control-sm" data-competency="communication">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="communication"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>傾聴力</label>
+                                    <select class="form-control form-control-sm" data-competency="listening">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="listening"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>柔軟性</label>
+                                    <select class="form-control form-control-sm" data-competency="flexibility">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="flexibility"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>情況把握力</label>
+                                    <select class="form-control form-control-sm" data-competency="empathy">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="empathy"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>規律性</label>
+                                    <select class="form-control form-control-sm" data-competency="discipline">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="discipline"></textarea>
+                                </div>
+
+                                <div class="competency-eval-item">
+                                    <label>ストレスコントロール力</label>
+                                    <select class="form-control form-control-sm" data-competency="stressControl">
+                                        <option value="">評価なし</option>
+                                        <option value="1">1 - 不十分</option>
+                                        <option value="2">2 - やや不十分</option>
+                                        <option value="3">3 - 普通</option>
+                                        <option value="4">4 - 良い</option>
+                                        <option value="5">5 - 優秀</option>
+                                    </select>
+                                    <textarea class="form-control form-control-sm" rows="2" placeholder="エピソードを記述" data-competency="stressControl"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalGibbsReflection')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveGibbsReflection()">
+                        <i class="fas fa-save"></i> 振り返りを保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 項目別編集 -->
+    <div class="modal" id="modalEditSingleItem">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-edit"></i> <span id="singleItemTitle">項目を編集</span></h3>
+                    <button class="modal-close" onclick="closeModal('modalEditSingleItem')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditSingleItem">
+                        <div class="form-group" id="singleItemFormGroup">
+                            <!-- 動的に内容が変わる -->
+                        </div>
+                        
+                        <!-- キーワードタグ編集セクション -->
+                        <div class="form-group" id="keywordTagsSection" style="margin-top: 24px;">
+                            <label>
+                                <i class="fas fa-tags"></i> キーワードタグ
+                                <small style="color: var(--text-muted); font-weight: normal; margin-left: 8px;">
+                                    （テキストから自動生成されます。編集も可能です）
+                                </small>
+                            </label>
+                            <div class="keyword-tags-edit-container">
+                                <div id="currentKeywordTags" class="keyword-tags-display">
+                                    <!-- 現在のタグが表示されます -->
+                                </div>
+                                <div class="tag-input-group" style="margin-top: 12px;">
+                                    <input 
+                                        type="text" 
+                                        id="newKeywordInput" 
+                                        placeholder="新しいタグを追加（例：リーダーシップ）"
+                                        onkeypress="if(event.key === 'Enter') { event.preventDefault(); addKeywordTag(); }"
+                                    >
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="addKeywordTag()">
+                                        <i class="fas fa-plus"></i> 追加
+                                    </button>
+                                </div>
+                                <button type="button" class="btn btn-outline btn-sm" onclick="regenerateKeywordTags()" style="margin-top: 8px;">
+                                    <i class="fas fa-sync-alt"></i> テキストから再生成
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalEditSingleItem')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveSingleItem()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 振り返り詳細表示 -->
+    <div class="modal" id="modalViewReflection">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-journal-whills"></i> 振り返り詳細</h3>
+                    <button class="modal-close" onclick="closeModal('modalViewReflection')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="reflectionDetailContent">
+                        <!-- 動的に振り返り内容が表示される -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalViewReflection')">
+                        閉じる
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: Relation追加 -->
+    <div class="modal" id="modalAddRelation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-plus"></i> Relationを追加</h3>
+                    <button class="modal-close" onclick="closeModal('modalAddRelation')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddRelation">
+                        <!-- 名前検索 -->
+                        <div class="form-group">
+                            <label><i class="fas fa-search"></i> 名前を検索</label>
+                            <input type="text" id="relationSearchInput" class="form-control" placeholder="名前を入力してください" oninput="searchMembersForRelation()">
+                            <div class="search-results" id="relationSearchResults">
+                                <!-- 検索結果が表示される -->
+                            </div>
+                        </div>
+
+                        <!-- 選択されたメンバー -->
+                        <div class="form-group" id="selectedMemberGroup" style="display: none;">
+                            <label><i class="fas fa-user-check"></i> 選択されたメンバー</label>
+                            <div class="selected-member" id="selectedMemberDisplay"></div>
+                        </div>
+
+                        <!-- カテゴリ -->
+                        <div class="form-group">
+                            <label><i class="fas fa-folder"></i> カテゴリ</label>
+                            <select id="relationCategory" class="form-control" required onchange="updateRelationTypeOptions()">
+                                <option value="">選択してください</option>
+                                <option value="club">クラブ</option>
+                                <option value="project">プロジェクト</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+
+                        <!-- 関係性 -->
+                        <div class="form-group">
+                            <label><i class="fas fa-link"></i> 関係性</label>
+                            <select id="relationRelationType" class="form-control" required>
+                                <option value="">カテゴリを先に選択してください</option>
+                            </select>
+                        </div>
+
+                        <!-- 活動名・役割（クラブ・プロジェクトの場合） -->
+                        <div class="form-group" id="activityGroup" style="display: none;">
+                            <label><i class="fas fa-flag"></i> 活動名</label>
+                            <input type="text" id="relationActivityName" class="form-control" placeholder="例: 熊本地震支援">
+                        </div>
+
+                        <div class="form-group" id="roleGroup" style="display: none;">
+                            <label><i class="fas fa-user-tag"></i> 役割</label>
+                            <input type="text" id="relationRole" class="form-control" placeholder="例: 同じ班">
+                        </div>
+
+                        <div class="form-group" id="yearGroup" style="display: none;">
+                            <label><i class="fas fa-calendar"></i> 年度</label>
+                            <input type="number" id="relationYear" class="form-control" placeholder="2024" min="2000" max="2099">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalAddRelation')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveRelation()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 承認待ち一覧 -->
+    <div class="modal" id="modalApprovalList">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-bell"></i> 承認待ちのRelation</h3>
+                    <button class="modal-close" onclick="closeModal('modalApprovalList')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="approval-list" id="approvalList">
+                        <!-- 承認待ちカードが動的に生成される -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalApprovalList')">
+                        閉じる
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 活動詳細表示 -->
+    </div>
+
+    <!-- モーダル: 活動詳細表示 -->
+    <div class="modal" id="modalActivityDetail">
+        <div class="modal-dialog modal-large">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-info-circle"></i> 活動詳細</h3>
+                    <button class="modal-close" onclick="closeModal('modalActivityDetail')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="activityDetailContent">
+                        <!-- 動的に活動詳細が表示される -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalActivityDetail')">
+                        閉じる
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 希望する関わり方編集 -->
+    <div class="modal" id="modalEditInvolvement">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-handshake"></i> 希望する関わり方</h3>
+                    <button class="modal-close" onclick="closeModal('modalEditInvolvement')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditInvolvement">
+                        <!-- タブナビゲーション -->
+                        <div class="involvement-tabs">
+                            <button type="button" class="involvement-tab active" data-tab="club">
+                                <i class="fas fa-users-cog"></i> クラブ
+                            </button>
+                            <button type="button" class="involvement-tab" data-tab="project">
+                                <i class="fas fa-project-diagram"></i> プロジェクト
+                            </button>
+                            <button type="button" class="involvement-tab" data-tab="hq">
+                                <i class="fas fa-building"></i> 本部組織
+                            </button>
+                        </div>
+
+                        <!-- クラブでの関わり方 -->
+                        <div class="involvement-tab-content active" id="tabContentClub">
+                            <div class="involvement-rating-item">
+                                <label>参加者として関わりたい</label>
+                                <div class="star-rating-input" id="clubParticipantRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>運営スタッフとして関わりたい</label>
+                                <div class="star-rating-input" id="clubStaffRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>全体をマネジメントする立場として関わりたい</label>
+                                <div class="star-rating-input" id="clubManagementRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- プロジェクトでの関わり方 -->
+                        <div class="involvement-tab-content" id="tabContentProject">
+                            <div class="involvement-rating-item">
+                                <label>参加者として関わりたい</label>
+                                <div class="star-rating-input" id="projectParticipantRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>運営スタッフとして関わりたい</label>
+                                <div class="star-rating-input" id="projectStaffRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>全体をマネジメントする立場として関わりたい</label>
+                                <div class="star-rating-input" id="projectManagementRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 本部組織での関わり方 -->
+                        <div class="involvement-tab-content" id="tabContentHq">
+                            <div class="involvement-rating-item">
+                                <label>参加者として関わりたい</label>
+                                <div class="star-rating-input" id="hqParticipantRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>運営スタッフとして関わりたい</label>
+                                <div class="star-rating-input" id="hqStaffRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+
+                            <div class="involvement-rating-item">
+                                <label>全体をマネジメントする立場として関わりたい</label>
+                                <div class="star-rating-input" id="hqManagementRatingInput" data-rating="0">
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalEditInvolvement')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveInvolvementPreferences()">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 目標追加 -->
+    <div class="modal" id="modalAddGoal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-plus"></i> 新しい目標を追加</h3>
+                    <button class="modal-close" onclick="closeModal('modalAddGoal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddGoal">
+                        <div class="form-group">
+                            <label for="goalTitle">
+                                <i class="fas fa-bullseye"></i> 目標タイトル
+                                <span class="required-mark">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="goalTitle" 
+                                placeholder="目標のタイトルを入力してください"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goalPeriodType">
+                                <i class="fas fa-calendar-alt"></i> 期間タイプ
+                                <span class="required-mark">*</span>
+                            </label>
+                            <select class="form-control" id="goalPeriodType" required>
+                                <option value="">選択してください</option>
+                                <option value="long">長期目標（1年以上）</option>
+                                <option value="medium">中期目標（3ヶ月〜1年）</option>
+                                <option value="short">短期目標（〜3ヶ月）</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goalDescription">
+                                <i class="fas fa-align-left"></i> 目標の詳細説明
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="goalDescription" 
+                                rows="4"
+                                placeholder="目標の詳細な説明を入力してください"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group form-col-half">
+                                <label for="goalStartDate">
+                                    <i class="fas fa-play"></i> 開始日
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="goalStartDate" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group form-col-half">
+                                <label for="goalEndDate">
+                                    <i class="fas fa-flag-checkered"></i> 終了日（目標）
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="goalEndDate"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goalTags">
+                                <i class="fas fa-tags"></i> タグ
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="goalTags" 
+                                placeholder="カンマ区切りで入力（例: リーダーシップ, マネジメント）"
+                            >
+                            <small class="form-text">目標に関連するキーワードをカンマ区切りで入力してください</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goalProgress">
+                                <i class="fas fa-tasks"></i> 初期進捗率
+                            </label>
+                            <div class="progress-input-group">
+                                <input 
+                                    type="range" 
+                                    class="form-range" 
+                                    id="goalProgress" 
+                                    min="0" 
+                                    max="100" 
+                                    value="0"
+                                    oninput="updateProgressDisplay(this.value)"
+                                >
+                                <span class="progress-display" id="progressDisplay">0%</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalAddGoal')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveNewGoal()">
+                        <i class="fas fa-save"></i> 目標を追加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 目標詳細表示 -->
+    <div class="modal" id="modalGoalDetail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-bullseye"></i> 目標詳細</h3>
+                    <button class="modal-close" onclick="closeModal('modalGoalDetail')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="goal-detail-view" id="goalDetailContent">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalGoalDetail')">
+                        閉じる
+                    </button>
+                    <button class="btn btn-primary" id="btnEditGoalFromDetail">
+                        <i class="fas fa-edit"></i> 編集
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 目標編集 -->
+    <div class="modal" id="modalEditGoal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-edit"></i> 目標を編集</h3>
+                    <button class="modal-close" onclick="closeModal('modalEditGoal')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditGoal">
+                        <input type="hidden" id="editGoalId">
+                        
+                        <div class="form-group">
+                            <label for="editGoalTitle">
+                                <i class="fas fa-bullseye"></i> 目標タイトル
+                                <span class="required-mark">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="editGoalTitle" 
+                                placeholder="目標のタイトルを入力してください"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGoalPeriodType">
+                                <i class="fas fa-calendar-alt"></i> 期間タイプ
+                                <span class="required-mark">*</span>
+                            </label>
+                            <select class="form-control" id="editGoalPeriodType" required>
+                                <option value="">選択してください</option>
+                                <option value="long">長期目標（1年以上）</option>
+                                <option value="medium">中期目標（3ヶ月〜1年）</option>
+                                <option value="short">短期目標（〜3ヶ月）</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGoalDescription">
+                                <i class="fas fa-align-left"></i> 目標の詳細説明
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="editGoalDescription" 
+                                rows="4"
+                                placeholder="目標の詳細な説明を入力してください"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group form-col-half">
+                                <label for="editGoalStartDate">
+                                    <i class="fas fa-play"></i> 開始日
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="editGoalStartDate" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group form-col-half">
+                                <label for="editGoalEndDate">
+                                    <i class="fas fa-flag-checkered"></i> 終了日（目標）
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="editGoalEndDate"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGoalTags">
+                                <i class="fas fa-tags"></i> タグ
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="editGoalTags" 
+                                placeholder="カンマ区切りで入力（例: リーダーシップ, マネジメント）"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGoalProgress">
+                                <i class="fas fa-tasks"></i> 進捗率
+                            </label>
+                            <div class="progress-input-group">
+                                <input 
+                                    type="range" 
+                                    class="form-range" 
+                                    id="editGoalProgress" 
+                                    min="0" 
+                                    max="100" 
+                                    value="0"
+                                    oninput="updateProgressDisplay(this.value, 'editProgressDisplay')"
+                                >
+                                <span class="progress-display" id="editProgressDisplay">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGoalStatus">
+                                <i class="fas fa-info-circle"></i> ステータス
+                            </label>
+                            <select class="form-control" id="editGoalStatus">
+                                <option value="active">進行中</option>
+                                <option value="completed">完了</option>
+                                <option value="paused">一時停止</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalEditGoal')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="saveEditedGoal()">
+                        <i class="fas fa-save"></i> 変更を保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/keyword-edit.js"></script>
+    <script src="js/connections.js"></script>
+</body>
+</html>

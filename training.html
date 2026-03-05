@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研修メニュー - IVUSA人事タレントマネジメントシステム</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/training.css">
+    <link rel="stylesheet" href="css/training-chapters.css">
+    <link rel="stylesheet" href="css/video-upload.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-users"></i> <span>IVUSA</span></h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>自分ページ</span>
+            </a>
+            <a href="club.html" class="nav-item">
+                <i class="fas fa-users-cog"></i>
+                <span>クラブ管理</span>
+            </a>
+            <a href="project.html" class="nav-item">
+                <i class="fas fa-project-diagram"></i>
+                <span>プロジェクト管理</span>
+            </a>
+            <a href="org-chart.html" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>本部管理</span>
+            </a>
+            <a href="talent-search.html" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>人材検索</span>
+            </a>
+            <a href="training.html" class="nav-item active">
+                <i class="fas fa-graduation-cap"></i>
+                <span>研修メニュー</span>
+            </a>
+            <a href="training-management.html" class="nav-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>研修管理</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>田中 優希</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-graduation-cap"></i> 研修メニュー</h2>
+            <p class="page-description">eラーニングと講習を通じてスキルアップしましょう</p>
+        </div>
+
+        <!-- タブナビゲーション -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="elearning">
+                <i class="fas fa-video"></i> eラーニング
+            </button>
+            <button class="tab-btn" data-tab="workshops">
+                <i class="fas fa-chalkboard-teacher"></i> 講習
+            </button>
+        </div>
+
+        <!-- eラーニングタブ -->
+        <div class="tab-content active" id="tab-elearning">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div>
+                    <h3><i class="fas fa-video"></i> 研修動画</h3>
+                    <p>YouTube動画をアップロードして研修コンテンツを管理</p>
+                </div>
+                <button class="btn btn-primary" onclick="openUploadModal()">
+                    <i class="fas fa-upload"></i> 動画をアップロード
+                </button>
+            </div>
+            
+            <div class="training-stats">
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="stat-info">
+                        <h3>受講完了</h3>
+                        <p class="stat-value" id="completedCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-play-circle"></i>
+                    <div class="stat-info">
+                        <h3>受講中</h3>
+                        <p class="stat-value" id="inProgressCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="stat-info">
+                        <h3>未受講</h3>
+                        <p class="stat-value" id="notStartedCount">6</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 動画一覧 -->
+            <div class="video-grid" id="videoGrid">
+                <!-- 動画が動的に追加されます -->
+            </div>
+        </div>
+
+        <!-- 講習タブ -->
+        <div class="tab-content" id="tab-workshops">
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-alt"></i> 開催予定の講習</h3>
+                <p>実地研修でスキルアップ</p>
+            </div>
+
+            <div class="workshops-grid">
+                <!-- 講習1: リーダー養成講座 -->
+                <div class="workshop-card">
+                    <div class="workshop-header">
+                        <span class="workshop-category category-leadership">リーダーシップ</span>
+                        <span class="workshop-status status-available">募集中</span>
+                    </div>
+                    <h3>リーダー養成講座</h3>
+                    <p class="workshop-description">プロジェクトリーダーとして必要なスキルを2日間で集中的に学びます。</p>
+                    <div class="workshop-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025年1月15日（土）〜16日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>東京本部</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>定員: 20名（残り8名）</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="entryWorkshop('workshop-1')">
+                        <i class="fas fa-user-plus"></i> エントリー
+                    </button>
+                </div>
+
+                <!-- 講習2: コミュニケーションワークショップ -->
+                <div class="workshop-card">
+                    <div class="workshop-header">
+                        <span class="workshop-category category-communication">コミュニケーション</span>
+                        <span class="workshop-status status-available">募集中</span>
+                    </div>
+                    <h3>コミュニケーションワークショップ</h3>
+                    <p class="workshop-description">効果的なコミュニケーション技術を実践的に習得します。</p>
+                    <div class="workshop-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025年1月22日（土）</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>大阪支部</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>定員: 30名（残り15名）</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="entryWorkshop('workshop-2')">
+                        <i class="fas fa-user-plus"></i> エントリー
+                    </button>
+                </div>
+
+                <!-- 講習3: プロジェクト管理実践講座 -->
+                <div class="workshop-card">
+                    <div class="workshop-header">
+                        <span class="workshop-category category-management">マネジメント</span>
+                        <span class="workshop-status status-available">募集中</span>
+                    </div>
+                    <h3>プロジェクト管理実践講座</h3>
+                    <p class="workshop-description">実際のケーススタディを通じてプロジェクト管理を学びます。</p>
+                    <div class="workshop-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025年2月5日（土）〜6日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>オンライン</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>定員: 50名（残り30名）</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="entryWorkshop('workshop-3')">
+                        <i class="fas fa-user-plus"></i> エントリー
+                    </button>
+                </div>
+
+                <!-- 講習4: チームビルディング研修 -->
+                <div class="workshop-card">
+                    <div class="workshop-header">
+                        <span class="workshop-category category-teamwork">チームワーク</span>
+                        <span class="workshop-status status-full">満員</span>
+                    </div>
+                    <h3>チームビルディング研修</h3>
+                    <p class="workshop-description">チームの一体感を高めるための実践的なワークショップです。</p>
+                    <div class="workshop-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>2025年1月29日（土）</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>名古屋支部</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>定員: 25名（満員）</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" disabled>
+                        <i class="fas fa-ban"></i> 満員
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- モーダル: 動画再生 -->
+    <div class="modal modal-video-player" id="modalVideoPlayer">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="videoModalTitle"><i class="fas fa-video"></i> 動画を視聴</h3>
+                    <button class="modal-close" onclick="closeVideoModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="video-container-with-chapters">
+                        <div class="video-player-section">
+                            <video id="videoPlayer" controls controlsList="nodownload" style="width: 100%; border-radius: 8px;">
+                                <source id="videoSource" src="" type="video/mp4">
+                                お使いのブラウザは動画タグをサポートしていません。
+                            </video>
+                            <div class="video-progress-info">
+                                <p><i class="fas fa-info-circle"></i> 動画を最後まで視聴すると、アンケートに回答できます。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chapters-section">
+                            <h4><i class="fas fa-list"></i> チャプター</h4>
+                            <div id="chapterList" class="chapter-list">
+                                <!-- チャプターが動的に追加されます -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeVideoModal()">
+                        閉じる
+                    </button>
+                    <button class="btn btn-primary" id="btnOpenSurvey" onclick="openSurvey()" disabled>
+                        <i class="fas fa-clipboard-list"></i> アンケートに回答
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: アンケート -->
+    <div class="modal" id="modalSurvey">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-clipboard-list"></i> 受講アンケート</h3>
+                    <button class="modal-close" onclick="closeModal('modalSurvey')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formSurvey">
+                        <input type="hidden" id="surveyVideoId">
+                        
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-star"></i> この研修の満足度を教えてください
+                                <span class="required-mark">*</span>
+                            </label>
+                            <div class="rating-group">
+                                <label class="rating-option">
+                                    <input type="radio" name="satisfaction" value="5" required>
+                                    <span>⭐⭐⭐⭐⭐ 非常に良い</span>
+                                </label>
+                                <label class="rating-option">
+                                    <input type="radio" name="satisfaction" value="4" required>
+                                    <span>⭐⭐⭐⭐ 良い</span>
+                                </label>
+                                <label class="rating-option">
+                                    <input type="radio" name="satisfaction" value="3" required>
+                                    <span>⭐⭐⭐ 普通</span>
+                                </label>
+                                <label class="rating-option">
+                                    <input type="radio" name="satisfaction" value="2" required>
+                                    <span>⭐⭐ あまり良くない</span>
+                                </label>
+                                <label class="rating-option">
+                                    <input type="radio" name="satisfaction" value="1" required>
+                                    <span>⭐ 良くない</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="surveyLearned">
+                                <i class="fas fa-lightbulb"></i> この研修で学んだことを教えてください
+                                <span class="required-mark">*</span>
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="surveyLearned" 
+                                rows="4"
+                                placeholder="研修を通じて得た知識やスキルを記入してください"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="surveyApplication">
+                                <i class="fas fa-rocket"></i> 今後どのように活用しますか？
+                                <span class="required-mark">*</span>
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="surveyApplication" 
+                                rows="4"
+                                placeholder="学んだことをどのように実践・活用するか記入してください"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="surveyFeedback">
+                                <i class="fas fa-comment"></i> その他のご意見・ご感想
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="surveyFeedback" 
+                                rows="3"
+                                placeholder="研修に関する追加のコメントがあれば記入してください（任意）"
+                            ></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalSurvey')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="submitSurvey()">
+                        <i class="fas fa-paper-plane"></i> 送信して受講完了
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 講習エントリー -->
+    <div class="modal" id="modalWorkshopEntry">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-user-plus"></i> 講習エントリー</h3>
+                    <button class="modal-close" onclick="closeModal('modalWorkshopEntry')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="entry-info" id="entryWorkshopInfo">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+                    <form id="formWorkshopEntry">
+                        <input type="hidden" id="entryWorkshopId">
+                        
+                        <div class="form-group">
+                            <label for="entryMotivation">
+                                <i class="fas fa-heart"></i> 参加動機を教えてください
+                                <span class="required-mark">*</span>
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="entryMotivation" 
+                                rows="4"
+                                placeholder="この講習に参加したい理由を記入してください"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="entryGoals">
+                                <i class="fas fa-bullseye"></i> この講習で達成したい目標
+                                <span class="required-mark">*</span>
+                            </label>
+                            <textarea 
+                                class="form-control" 
+                                id="entryGoals" 
+                                rows="3"
+                                placeholder="講習を通じて達成したいことを記入してください"
+                                required
+                            ></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal('modalWorkshopEntry')">
+                        キャンセル
+                    </button>
+                    <button class="btn btn-primary" onclick="submitWorkshopEntry()">
+                        <i class="fas fa-paper-plane"></i> エントリーを送信
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: 動画アップロード -->
+    <div class="modal" id="modalUploadVideo">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-upload"></i> 動画をアップロード</h3>
+                    <button class="modal-close" onclick="closeModal('modalUploadVideo')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formUploadVideo">
+                        <!-- ステップ1: YouTube URL入力 -->
+                        <div class="upload-step" id="step1">
+                            <h4><i class="fab fa-youtube"></i> ステップ1: YouTube動画のURLを入力</h4>
+                            
+                            <div class="form-group">
+                                <label for="youtubeUrl">
+                                    YouTube動画のURL <span class="required-mark">*</span>
+                                </label>
+                                <input type="url" id="youtubeUrl" class="form-control" 
+                                       placeholder="https://www.youtube.com/watch?v=..." 
+                                       required>
+                                <p class="form-hint">
+                                    <i class="fas fa-info-circle"></i> 
+                                    YouTubeの動画ページのURLをコピーして貼り付けてください<br>
+                                    例: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+                                </p>
+                            </div>
+                            
+                            <button type="button" class="btn btn-secondary" onclick="loadYoutubePreview()">
+                                <i class="fas fa-eye"></i> プレビューを表示
+                            </button>
+                            
+                            <!-- YouTube プレビュー -->
+                            <div id="youtubePreviewArea" style="display: none; margin-top: 24px;">
+                                <div class="youtube-preview-container">
+                                    <div class="youtube-embed">
+                                        <iframe id="youtubePreview" 
+                                                width="100%" 
+                                                height="400" 
+                                                frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                    <div class="video-info">
+                                        <p><strong>動画ID:</strong> <span id="youtubeVideoId"></span></p>
+                                        <p id="youtubeDurationInfo" style="display: none;"><strong>長さ:</strong> <span id="youtubeDuration"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ステップ2: 基本情報入力 -->
+                        <div class="upload-step" id="step2" style="display: none;">
+                            <h4><i class="fas fa-info-circle"></i> ステップ2: 基本情報を入力</h4>
+                            
+                            <div class="form-group">
+                                <label for="videoTitle">
+                                    動画タイトル <span class="required-mark">*</span>
+                                </label>
+                                <input type="text" id="videoTitle" class="form-control" required placeholder="例: リーダーシップ基礎">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="videoDescription">説明</label>
+                                <textarea id="videoDescription" class="form-control" rows="3" placeholder="この研修動画の内容を説明してください"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="videoLevel">レベル</label>
+                                    <select id="videoLevel" class="form-control">
+                                        <option value="初級">初級</option>
+                                        <option value="中級">中級</option>
+                                        <option value="上級">上級</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoCategory">カテゴリ</label>
+                                    <select id="videoCategory" class="form-control">
+                                        <option value="リーダーシップ">リーダーシップ</option>
+                                        <option value="コミュニケーション">コミュニケーション</option>
+                                        <option value="マネジメント">マネジメント</option>
+                                        <option value="チームワーク">チームワーク</option>
+                                        <option value="その他">その他</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="videoManualDuration">
+                                        動画の長さ（秒） <span class="required-mark">*</span>
+                                    </label>
+                                    <input type="number" id="videoManualDuration" class="form-control" 
+                                           placeholder="例: 600（10分）" min="1" required>
+                                    <small class="form-hint">YouTubeの動画の長さを秒数で入力してください</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ステップ3: チャプター設定 -->
+                        <div class="upload-step" id="step3" style="display: none;">
+                            <h4><i class="fas fa-list"></i> ステップ3: チャプターを設定</h4>
+                            
+                            <!-- 自動生成オプション -->
+                            <div class="chapter-auto-generate">
+                                <h5><i class="fas fa-magic"></i> 自動生成</h5>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="chapterCount">チャプター数</label>
+                                        <input type="number" id="chapterCount" class="form-control" value="5" min="2" max="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-secondary" onclick="autoGenerateChapters()">
+                                            <i class="fas fa-magic"></i> 自動生成
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="form-hint">動画を等間隔に分割してチャプターを自動生成します。生成後に編集可能です。</p>
+                            </div>
+                            
+                            <!-- チャプターリスト -->
+                            <div class="chapter-editor">
+                                <div class="chapter-editor-header">
+                                    <h5>チャプター一覧</h5>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="addChapterManually()">
+                                        <i class="fas fa-plus"></i> 手動で追加
+                                    </button>
+                                </div>
+                                
+                                <div id="chapterEditorList" class="chapter-list-editor">
+                                    <!-- チャプターが動的に追加されます -->
+                                    <p class="empty-message">チャプターがまだありません。自動生成または手動で追加してください。</p>
+                                </div>
+                            </div>
+                            
+                            <!-- YouTube プレビュー（チャプター設定用） -->
+                            <div class="chapter-preview-video">
+                                <h5>動画プレビュー（時間確認用）</h5>
+                                <div class="youtube-embed">
+                                    <iframe id="chapterPreviewYoutube" 
+                                            width="100%" 
+                                            height="300" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>
+                                </div>
+                                <p class="form-hint">
+                                    <i class="fas fa-info-circle"></i> 
+                                    YouTubeプレイヤーで動画を再生し、時間を確認してください。時間はチャプター一覧で手動入力できます。
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btnPrevStep" onclick="prevStep()" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> 戻る
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('modalUploadVideo')">
+                        キャンセル
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnNextStep" onclick="nextStep()">
+                        次へ <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSaveVideo" onclick="saveVideo()" style="display: none;">
+                        <i class="fas fa-save"></i> 保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/training.js"></script>
+    <script src="js/video-upload.js"></script>
+</body>
+</html>

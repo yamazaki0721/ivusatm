@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト管理 - IVUSA人事タレントマネジメントシステム</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/club.css">
+    <link rel="stylesheet" href="css/org-chart-new.css">
+    <link rel="stylesheet" href="css/project.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>IVUSA</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>自分ページ</span>
+            </a>
+            <a href="club.html" class="nav-item">
+                <i class="fas fa-users-cog"></i>
+                <span>クラブ管理</span>
+            </a>
+            <a href="project.html" class="nav-item active">
+                <i class="fas fa-project-diagram"></i>
+                <span>プロジェクト管理</span>
+            </a>
+            <a href="org-chart.html" class="nav-item">
+                <i class="fas fa-building"></i>
+                <span>本部管理</span>
+            </a>
+            <a href="talent-search.html" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>人材検索</span>
+            </a>
+            <a href="training.html" class="nav-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span>研修メニュー</span>
+            </a>
+            <a href="training-management.html" class="nav-item">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>研修管理</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>山田 太郎</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-project-diagram"></i> プロジェクト管理</h2>
+            <div class="header-badges">
+                <span class="badge badge-info">春季災害救援</span>
+                <span class="badge badge-warning">プロジェクトリーダー権限</span>
+            </div>
+        </div>
+
+        <!-- プロジェクトサマリー -->
+        <div class="club-summary">
+            <div class="summary-card">
+                <i class="fas fa-users"></i>
+                <div class="summary-info">
+                    <h3>総参加者数</h3>
+                    <p class="summary-value"><span id="totalMembers">45</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-user-tie"></i>
+                <div class="summary-info">
+                    <h3>リーダー</h3>
+                    <p class="summary-value"><span id="leaderCount">8</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-user-friends"></i>
+                <div class="summary-info">
+                    <h3>一般参加者</h3>
+                    <p class="summary-value"><span id="regularCount">37</span>名</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="summary-info">
+                    <h3>研修完了率</h3>
+                    <p class="summary-value"><span id="trainingRate">82</span>%</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- タブナビゲーション -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="goals">
+                <i class="fas fa-bullseye"></i> 目標・タスク
+            </button>
+            <button class="tab-btn" data-tab="organization">
+                <i class="fas fa-sitemap"></i> 組閣
+            </button>
+            <button class="tab-btn" data-tab="composition">
+                <i class="fas fa-table"></i> 人事配置
+            </button>
+            <button class="tab-btn" data-tab="team-formation">
+                <i class="fas fa-users-cog"></i> 班編成サポート
+            </button>
+            <button class="tab-btn" data-tab="evaluation">
+                <i class="fas fa-star"></i> 人事評価
+            </button>
+            <button class="tab-btn" data-tab="participation">
+                <i class="fas fa-chart-bar"></i> 参加状況
+            </button>
+            <button class="tab-btn" data-tab="training">
+                <i class="fas fa-graduation-cap"></i> 研修状況
+            </button>
+        </div>
+
+        <!-- 目標・タスクタブ -->
+        <div class="tab-content active" id="tab-goals">
+            <div class="section-header">
+                <h3><i class="fas fa-bullseye"></i> 目標・タスク管理</h3>
+                <p class="section-description">プロジェクトの目標を設定し、達成のためのタスクを管理します</p>
+            </div>
+
+            <!-- 目標設定セクション -->
+            <div class="goals-section">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-flag"></i> 目標設定</h3>
+                        <button class="btn btn-primary btn-sm" onclick="saveGoals()">
+                            <i class="fas fa-save"></i> 保存
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <!-- タイムライン -->
+                        <div class="goals-timeline">
+                            <!-- プロジェクト全体目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-year">
+                                        <i class="fas fa-flag-checkered"></i>
+                                        <span>プロジェクト全体目標</span>
+                                    </div>
+                                    <div class="goal-period-date">最終目標</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="project-significance" rows="2" 
+                                            placeholder="例：災害被災地の復興支援を通じて、地域社会に貢献する"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="project-result-quantity" rows="2" 
+                                                placeholder="例：参加者50名以上、活動日数10日間、支援世帯数100世帯以上"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="project-result-quality" rows="2" 
+                                                placeholder="例：被災者の方々に寄り添った支援を実現し、感謝の言葉をいただく"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="project-action-quantity" rows="2" 
+                                                placeholder="例：事前ミーティング3回実施、部門別会議を週1回実施"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="project-action-quality" rows="2" 
+                                                placeholder="例：参加者全員が主体的に活動に関わり、チームワークを発揮する"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 矢印 -->
+                            <div class="timeline-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+
+                            <!-- 中間目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-halfyear">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>中間目標</span>
+                                    </div>
+                                    <div class="goal-period-date">活動中盤</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="mid-significance" rows="2" 
+                                            placeholder="例：活動の質を向上させ、より効果的な支援を実現する"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="mid-result-quantity" rows="2" 
+                                                placeholder="例：支援世帯数50世帯以上、参加者満足度80%以上"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="mid-result-quality" rows="2" 
+                                                placeholder="例：チーム内の連携がスムーズで、活動が円滑に進んでいる"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="mid-action-quantity" rows="2" 
+                                                placeholder="例：毎日の振り返りミーティング実施、活動報告を2日に1回発信"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="mid-action-quality" rows="2" 
+                                                placeholder="例：参加者同士が積極的にコミュニケーションを取る"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 矢印 -->
+                            <div class="timeline-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+
+                            <!-- 初期目標 -->
+                            <div class="goal-period-card">
+                                <div class="goal-period-header">
+                                    <div class="goal-period-badge badge-threemonth">
+                                        <i class="fas fa-calendar-day"></i>
+                                        <span>初期目標</span>
+                                    </div>
+                                    <div class="goal-period-date">活動初期</div>
+                                </div>
+                                <div class="goal-types">
+                                    <div class="goal-input-group">
+                                        <label class="goal-label">意義目標</label>
+                                        <textarea class="goal-input" id="initial-significance" rows="2" 
+                                            placeholder="例：参加者全員がプロジェクトの意義を理解し、活動に慣れる"></textarea>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-chart-line"></i> 成果目標（定量）</label>
+                                            <textarea class="goal-input" id="initial-result-quantity" rows="2" 
+                                                placeholder="例：支援世帯数20世帯以上、参加者の定着率90%以上"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-heart"></i> 成果目標（定性）</label>
+                                            <textarea class="goal-input" id="initial-result-quality" rows="2" 
+                                                placeholder="例：参加者がプロジェクトに対して前向きな気持ちを持っている"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="goal-dual-group">
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-running"></i> 行動目標（定量）</label>
+                                            <textarea class="goal-input" id="initial-action-quantity" rows="2" 
+                                                placeholder="例：オリエンテーション3回実施、安全講習会を全員が受講"></textarea>
+                                        </div>
+                                        <div class="goal-input-group">
+                                            <label class="goal-label"><i class="fas fa-users"></i> 行動目標（定性）</label>
+                                            <textarea class="goal-input" id="initial-action-quality" rows="2" 
+                                                placeholder="例：新規参加者に積極的に声をかけ、サポートする"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タスク管理セクション -->
+            <div class="tasks-section">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tasks"></i> タスク管理</h3>
+                        <button class="btn btn-primary btn-sm" onclick="openTaskModal()">
+                            <i class="fas fa-plus"></i> 新規タスク
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <!-- タスクフィルター -->
+                        <div class="task-filters">
+                            <button class="filter-btn active" onclick="filterTasks('all')">
+                                すべて <span class="filter-count" id="filterCountAll">4</span>
+                            </button>
+                            <button class="filter-btn" onclick="filterTasks('assigned')">
+                                振り分け済み <span class="filter-count" id="filterCountAssigned">2</span>
+                            </button>
+                            <button class="filter-btn" onclick="filterTasks('unassigned')">
+                                未振り分け <span class="filter-count" id="filterCountUnassigned">2</span>
+                            </button>
+                        </div>
+
+                        <!-- タスクリスト -->
+                        <div class="tasks-container" id="tasksContainer">
+                            <p style="text-align: center; padding: 20px; color: #888;">タスクを追加してください</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 組閣タブ -->
+        <div class="tab-content" id="tab-organization">
+            <div class="section-header">
+                <h3><i class="fas fa-sitemap"></i> プロジェクト組閣</h3>
+                <p class="section-description">組閣図機能は準備中です</p>
+            </div>
+        </div>
+
+        <!-- 目標・タスクタブ -->
+        <div class="tab-content active" id="tab-goals">
+                <h3><i class="fas fa-sitemap"></i> プロジェクト組閣</h3>
+            </div>
+
+            <div class="org-controls">
+                <button class="btn btn-primary" onclick="saveOrgChart()">
+                    <i class="fas fa-save"></i> 保存
+                </button>
+                <button class="btn btn-secondary" onclick="resetOrgChart()">
+                    <i class="fas fa-undo"></i> リセット
+                </button>
+            </div>
+
+            <!-- 新しい組織図レイアウト -->
+            <div class="org-chart-new-layout">
+                <!-- 左側：階層構造 -->
+                <div class="org-hierarchy-sidebar">
+                    <!-- 第1階層：プロマネ -->
+                    <div class="hierarchy-item level-1" data-id="pos-1-1" data-role="プロマネ">
+                        <div class="hierarchy-box">
+                            <div class="hierarchy-title">プロマネ</div>
+                            <div class="hierarchy-member-slot" 
+                                ondrop="handleDrop(event)" 
+                                ondragover="handleDragOver(event)" 
+                                ondragleave="handleDragLeave(event)">
+                                <div class="member-info empty">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>メンバーをドロップ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第2階層：ロジマネ -->
+                    <div class="hierarchy-department" data-id="pos-2-1" data-parent="pos-1-1" data-role="ロジマネ">
+                        <div class="department-header">
+                            <h3>ロジマネ</h3>
+                        </div>
+                        <div class="department-content"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)">
+                            <div class="department-placeholder">
+                                <i class="fas fa-user-plus"></i>
+                                <span>メンバーをドロップ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第3階層：ロジマネ管轄のPT -->
+                    <div class="hierarchy-sections" data-parent="pos-2-1">
+                        <div class="hierarchy-item level-3" data-id="pos-3-1" data-parent="pos-2-1">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-1')">
+                                    <span class="section-name-text" id="section-name-pos-3-1">ロジマネ 管轄</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-1')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-2" data-parent="pos-2-1">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-2')">
+                                    <span class="section-name-text" id="section-name-pos-3-2">PT1</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-2')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add-section" onclick="addSection('pos-2-1')">
+                            <i class="fas fa-plus"></i> PT追加
+                        </button>
+                    </div>
+
+                    <!-- 第2階層：コミマネ -->
+                    <div class="hierarchy-department" data-id="pos-2-2" data-parent="pos-1-1" data-role="コミマネ">
+                        <div class="department-header">
+                            <h3>コミマネ</h3>
+                        </div>
+                        <div class="department-content"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)">
+                            <div class="department-placeholder">
+                                <i class="fas fa-user-plus"></i>
+                                <span>メンバーをドロップ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 第3階層：コミマネ管轄のPT -->
+                    <div class="hierarchy-sections" data-parent="pos-2-2">
+                        <div class="hierarchy-item level-3" data-id="pos-3-3" data-parent="pos-2-2">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-3')">
+                                    <span class="section-name-text" id="section-name-pos-3-3">コミマネ 管轄</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-3')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hierarchy-item level-3" data-id="pos-3-4" data-parent="pos-2-2">
+                            <div class="hierarchy-box">
+                                <div class="hierarchy-title" onclick="editSectionName('pos-3-4')">
+                                    <span class="section-name-text" id="section-name-pos-3-4">PT2</span>
+                                    <i class="fas fa-edit section-edit-icon"></i>
+                                </div>
+                                <button class="btn-delete-section" onclick="deleteSection('pos-3-4')" title="削除">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-add-section" onclick="addSection('pos-2-2')">
+                            <i class="fas fa-plus"></i> PT追加
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右側：メンバー配置エリア -->
+                <div class="org-members-area">
+                    <div class="members-row level-1" data-target="pos-1-1">
+                        <div class="members-container" id="members-pos-1-1"></div>
+                    </div>
+                    <div class="members-row level-2" data-target="pos-2-1">
+                        <div class="members-container" id="members-pos-2-1"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-1">
+                        <div class="members-container" 
+                            id="members-pos-3-1"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-2">
+                        <div class="members-container" 
+                            id="members-pos-3-2"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                    <div class="members-row level-2" data-target="pos-2-2">
+                        <div class="members-container" id="members-pos-2-2"></div>
+                    </div>
+                    <div class="members-row level-3" data-target="pos-3-3">
+                        <div class="members-container" 
+                            id="members-pos-3-3"
+                            ondrop="handleDrop(event)" 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未配置メンバープール -->
+            <div class="member-pool-horizontal">
+                <div class="pool-section-horizontal">
+                    <h3><i class="fas fa-users"></i> 未配置メンバー</h3>
+                    <div id="unassignedPool" class="pool-content-horizontal" 
+                        ondrop="handleDrop(event)" 
+                        ondragover="handleDragOver(event)" 
+                        ondragleave="handleDragLeave(event)">
+                        <!-- メンバーカードが動的に生成される -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 人事配置タブ -->
+        <div class="tab-content" id="tab-composition">
+            <p style="text-align: center; padding: 40px; color: #888;">人事配置機能は準備中です</p>
+        </div>
+
+        <!-- 班編成サポートタブ -->
+        <div class="tab-content" id="tab-team-formation">
+            <div class="section-header">
+                <h3><i class="fas fa-users-cog"></i> 班編成サポート</h3>
+                <p class="section-description">Relationデータに基づいて最適な班編成を作成します</p>
+            </div>
+
+            <!-- コントロールパネル -->
+            <div class="section-card">
+                <div class="card-body">
+                    <div class="team-formation-controls">
+                        <div class="control-row">
+                            <div class="form-group" style="flex: 1;">
+                                <label><i class="fas fa-hashtag"></i> 班の数</label>
+                                <input type="number" id="teamCount" class="form-control" value="4" min="2" max="20" 
+                                    onchange="updateTeamFormation()">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label><i class="fas fa-users"></i> 1班あたりの人数</label>
+                                <input type="number" id="membersPerTeam" class="form-control" value="10" min="5" max="30" 
+                                    onchange="updateTeamFormation()">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label><i class="fas fa-database"></i> データソース</label>
+                                <select id="dataSource" class="form-control" onchange="updateTeamFormation()">
+                                    <option value="all">すべてのRelation</option>
+                                    <option value="personal">本人登録のみ</option>
+                                    <option value="management">上長登録のみ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-row" style="justify-content: flex-end;">
+                            <button class="btn btn-primary" onclick="generateTeams()">
+                                <i class="fas fa-magic"></i> 自動編成
+                            </button>
+                            <button class="btn btn-outline" onclick="resetTeamFormation()">
+                                <i class="fas fa-redo"></i> リセット
+                            </button>
+                            <button class="btn btn-success" onclick="exportTeamFormation()">
+                                <i class="fas fa-download"></i> CSVエクスポート
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 統計情報 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> 編成統計</h3>
+                </div>
+                <div class="card-body">
+                    <div class="team-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: var(--primary-light); color: var(--primary-color);">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalMembers">0</div>
+                                <div class="stat-label">総メンバー数</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #dbeafe; color: #3b82f6;">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="teamCountStat">4</div>
+                                <div class="stat-label">班数</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #d1fae5; color: #10b981;">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="avgMembersPerTeam">10</div>
+                                <div class="stat-label">平均人数/班</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: #fef3c7; color: #f59e0b;">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="totalRelations">0</div>
+                                <div class="stat-label">考慮したRelation数</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 班編成結果 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-list-ol"></i> 班編成結果</h3>
+                    <div class="card-header-actions">
+                        <button class="btn btn-sm btn-outline" onclick="toggleAllTeams()">
+                            <i class="fas fa-expand"></i> すべて展開/折りたたみ
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="teamFormationResult">
+                        <p style="text-align: center; padding: 40px; color: #888;">
+                            「自動編成」ボタンをクリックして班編成を開始してください
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- アルゴリズムの説明 -->
+            <div class="section-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-info-circle"></i> 編成アルゴリズムについて</h3>
+                </div>
+                <div class="card-body">
+                    <div class="algorithm-explanation">
+                        <h4>🎯 編成の目的</h4>
+                        <p>
+                            既存のRelationデータに基づいて、仲の良いメンバーを同じ班に配置し、
+                            チームワークとコミュニケーションを最大化します。
+                        </p>
+                        
+                        <h4>🔧 アルゴリズムの特徴</h4>
+                        <ul>
+                            <li><strong>Relation重視</strong>: 既存のつながりが強いメンバーを優先的に同じ班に配置</li>
+                            <li><strong>バランス調整</strong>: 各班の人数がなるべく均等になるように調整</li>
+                            <li><strong>孤立防止</strong>: Relationが少ないメンバーも適切に配置</li>
+                            <li><strong>ランダム性</strong>: 新しい出会いも考慮し、一部ランダムに配置</li>
+                        </ul>
+                        
+                        <h4>📊 データソース</h4>
+                        <ul>
+                            <li><strong>すべてのRelation</strong>: 本人登録と上長登録の両方を考慮（推奨）</li>
+                            <li><strong>本人登録のみ</strong>: メンバー自身が登録したRelationのみを使用</li>
+                            <li><strong>上長登録のみ</strong>: 管理者が登録したRelationのみを使用</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 人事評価タブ -->
+        <div class="tab-content" id="tab-evaluation">
+            <div class="section-header">
+                <h3><i class="fas fa-star"></i> 人事評価</h3>
+                <p class="section-description">部下のパフォーマンスを評価し、フィードバックを提供します</p>
+            </div>
+            
+            <div id="evaluationContent">
+                <p style="text-align: center; padding: 40px; color: #888;">評価対象となる部下を組閣図に配置してください</p>
+            </div>
+        </div>
+
+        <!-- 参加状況タブ -->
+        <div class="tab-content" id="tab-participation">
+            <p style="text-align: center; padding: 40px; color: #888;">参加状況機能は準備中です</p>
+        </div>
+
+        <!-- 研修状況タブ -->
+        <div class="tab-content" id="tab-training">
+            <div class="section-header">
+                <h3><i class="fas fa-graduation-cap"></i> 研修受講状況</h3>
+                <p class="section-description">役職別の必須研修受講状況を確認します</p>
+            </div>
+
+            <div id="trainingStatusContent">
+                <!-- JavaScriptで動的生成 -->
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/project.js"></script>
+    <script src="js/team-formation.js"></script>
+    <script src="js/org-chart-project.js"></script>
+</body>
+</html>

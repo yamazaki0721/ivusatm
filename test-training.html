@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研修管理 - テストページ</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2563eb;
+        }
+        .test-section {
+            border: 2px solid #e5e7eb;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+        .error {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .data-display {
+            background: #f3f4f6;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .data-display h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 研修管理システム - データテスト</h1>
+    
+    <div class="test-section">
+        <h2>ステップ1: データが読み込まれているか確認</h2>
+        <button onclick="testDataLoaded()">データ確認</button>
+        <div id="dataLoadResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>ステップ2: クラブを選択</h2>
+        <label for="testSelectClub">クラブを選択：</label>
+        <select id="testSelectClub" onchange="testChangeClub()">
+            <option value="tokyo">東京クラブ</option>
+            <option value="osaka">大阪クラブ</option>
+            <option value="nagoya">名古屋クラブ</option>
+            <option value="fukuoka">福岡クラブ</option>
+            <option value="all">全体</option>
+        </select>
+        <div id="clubChangeResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>ステップ3: 現在のデータを表示</h2>
+        <button onclick="displayCurrentData()">現在のデータを表示</button>
+        <div id="currentDataDisplay"></div>
+    </div>
+
+    <script src="js/training-management.js?v=2"></script>
+    <script>
+        function testDataLoaded() {
+            const resultDiv = document.getElementById('dataLoadResult');
+            let html = '<div class="data-display">';
+            
+            try {
+                html += '<h3>✅ データ読み込み成功</h3>';
+                html += '<p><strong>allClubsTrainingData が定義されているか:</strong> ' + (typeof allClubsTrainingData !== 'undefined' ? '✅ はい' : '❌ いいえ') + '</p>';
+                html += '<p><strong>trainingData が定義されているか:</strong> ' + (typeof trainingData !== 'undefined' ? '✅ はい' : '❌ いいえ') + '</p>';
+                
+                if (typeof allClubsTrainingData !== 'undefined') {
+                    html += '<p><strong>利用可能なクラブ:</strong></p><ul>';
+                    Object.keys(allClubsTrainingData).forEach(key => {
+                        const data = allClubsTrainingData[key];
+                        html += `<li>${key}: ${data.clubName} - 役職者${data.positionHolders.length}名</li>`;
+                    });
+                    html += '</ul>';
+                }
+                
+                resultDiv.className = 'test-section success';
+            } catch (e) {
+                html += '<h3>❌ エラー発生</h3>';
+                html += '<p>' + e.message + '</p>';
+                resultDiv.className = 'test-section error';
+            }
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+        }
+        
+        function testChangeClub() {
+            const select = document.getElementById('testSelectClub');
+            const clubKey = select.value;
+            const resultDiv = document.getElementById('clubChangeResult');
+            
+            let html = '<div class="data-display">';
+            
+            try {
+                const oldData = trainingData;
+                const oldHolders = oldData.positionHolders.length;
+                
+                // データを切り替え
+                trainingData = allClubsTrainingData[clubKey];
+                
+                const newHolders = trainingData.positionHolders.length;
+                
+                html += '<h3>✅ クラブ変更成功</h3>';
+                html += `<p><strong>選択したクラブ:</strong> ${clubKey}</p>`;
+                html += `<p><strong>クラブ名:</strong> ${trainingData.clubName}</p>`;
+                html += `<p><strong>変更前の役職者数:</strong> ${oldHolders}名</p>`;
+                html += `<p><strong>変更後の役職者数:</strong> ${newHolders}名</p>`;
+                
+                if (oldHolders !== newHolders) {
+                    html += '<p style="color: green; font-weight: bold;">🎉 数値が変わりました！</p>';
+                } else {
+                    html += '<p style="color: orange; font-weight: bold;">⚠️ 数値が同じです</p>';
+                }
+                
+                resultDiv.className = 'test-section success';
+            } catch (e) {
+                html += '<h3>❌ エラー発生</h3>';
+                html += '<p>' + e.message + '</p>';
+                resultDiv.className = 'test-section error';
+            }
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+            
+            // 自動的に現在のデータも表示
+            displayCurrentData();
+        }
+        
+        function displayCurrentData() {
+            const resultDiv = document.getElementById('currentDataDisplay');
+            let html = '<div class="data-display">';
+            
+            try {
+                html += '<h3>現在のtrainingData</h3>';
+                html += `<p><strong>クラブ名:</strong> ${trainingData.clubName}</p>`;
+                html += `<p><strong>役職者数:</strong> ${trainingData.positionHolders.length}名</p>`;
+                html += '<p><strong>役職者リスト:</strong></p><ul>';
+                trainingData.positionHolders.forEach(holder => {
+                    const position = trainingData.positions.find(p => p.id === holder.position);
+                    html += `<li>${holder.name} (${position.name}) - ${holder.grade}年</li>`;
+                });
+                html += '</ul>';
+                
+                // 基礎研修データ
+                html += '<p><strong>基礎研修データ:</strong></p>';
+                trainingData.basicTrainings.forEach(training => {
+                    const total = Object.values(training.byGrade).reduce((sum, g) => sum + g.total, 0);
+                    const completed = Object.values(training.byGrade).reduce((sum, g) => sum + g.completed, 0);
+                    const rate = Math.round((completed / total) * 100);
+                    html += `<p>${training.name}: ${rate}% (${completed}/${total}名)</p>`;
+                });
+            } catch (e) {
+                html += '<h3>❌ エラー発生</h3>';
+                html += '<p>' + e.message + '</p>';
+            }
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
