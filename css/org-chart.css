@@ -1,0 +1,706 @@
+/* 組織図専用CSS */
+
+/* コントロールボタン */
+.org-controls {
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+}
+
+/* 組織図コンテナ */
+.org-chart-container {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+    margin-bottom: 32px;
+    overflow: visible;
+}
+
+.org-chart-area {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+/* 階層 */
+.layer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    overflow: visible;
+}
+
+.layer-1 {
+    justify-content: center;
+}
+
+/* 第一階層から第二階層への接続線 */
+.layer-1::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(180deg, #8b5cf6 0%, #3b82f6 100%);
+}
+
+.layer-2 {
+    gap: 30px;
+    padding-top: 20px;
+}
+
+/* 第二階層の横線 */
+.layer-2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 440px;
+    height: 2px;
+    background: #3b82f6;
+}
+
+.layer-3 {
+    gap: 20px;
+    padding-top: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+}
+
+/* 第二階層のグループ（ボックス+接続線） */
+.layer-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+/* 第二階層から第三階層への縦線 */
+.layer-group::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(180deg, #3b82f6 0%, #10b981 100%);
+}
+
+/* 第二階層の各グループ上部への縦線 */
+.layer-group::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: #3b82f6;
+}
+
+/* 第三階層の親グループごとの横線（2つの子を結ぶ） */
+.layer-3 .position-box[data-parent="pos-2-1"]:nth-of-type(1)::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 170px;
+    height: 2px;
+    background: #10b981;
+}
+
+.layer-3 .position-box[data-parent="pos-2-2"]:nth-of-type(3)::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 170px;
+    height: 2px;
+    background: #10b981;
+}
+
+.layer-3 .position-box[data-parent="pos-2-3"]:nth-of-type(5)::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 170px;
+    height: 2px;
+    background: #10b981;
+}
+
+/* 第三階層の縦線 */
+.layer-3 .position-box::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: #10b981;
+}
+
+/* ポジションボックス */
+.position-box {
+    width: 100px;
+    height: 75px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.layer-1 .position-box {
+    border: 3px solid #8b5cf6;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.layer-2 .position-box {
+    border: 3px solid #3b82f6;
+    box-shadow: 0 3px 10px rgba(59, 130, 246, 0.15);
+}
+
+.layer-3 .position-box {
+    border: 3px solid #10b981;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+.position-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.layer-1 .position-box:hover {
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+}
+
+.layer-2 .position-box:hover {
+    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.25);
+}
+
+.layer-3 .position-box:hover {
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+}
+
+/* ボックス内のコンテンツエリア */
+.box-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.box-content.drag-over {
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px dashed var(--primary-color);
+}
+
+/* メンバー情報 */
+.member-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px;
+    text-align: center;
+}
+
+.member-info.empty {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+
+.member-info.empty i {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.member-info.empty span {
+    font-size: 0.65rem;
+}
+
+.member-info.assigned {
+    cursor: move;
+    position: relative;
+    user-select: none;
+}
+
+.member-info.assigned:active {
+    cursor: grabbing;
+}
+
+.member-info.assigned:hover {
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 10px;
+}
+
+.member-info.dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.member-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2563eb 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    flex-shrink: 0;
+}
+
+.member-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.member-name {
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.member-grade {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+}
+
+/* 追加・削除ボタン */
+.btn-add,
+.btn-delete {
+    position: absolute;
+    top: -10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.65rem;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add {
+    right: -10px;
+    border-color: #10b981;
+    color: #10b981;
+}
+
+.btn-add:hover {
+    background: #10b981;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+}
+
+.btn-delete {
+    left: -10px;
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background: var(--error-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.65rem;
+    opacity: 0;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.member-info.assigned:hover .btn-remove {
+    opacity: 1;
+}
+
+.btn-remove:hover {
+    background: #dc2626;
+    transform: scale(1.15);
+}
+
+/* メンバープール */
+.member-pool {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.pool-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pool-section h3 {
+    margin: 0 0 16px 0;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pool-section h3 i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.pool-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 100px;
+    padding: 14px;
+    background: white;
+    border-radius: var(--radius);
+    border: 2px dashed #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.pool-content.drag-over {
+    background: rgba(16, 185, 129, 0.05);
+    border-color: #10b981;
+    border-style: solid;
+}
+
+.empty-pool {
+    width: 100%;
+    text-align: center;
+    padding: 28px;
+    color: var(--success-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.empty-pool i {
+    font-size: 1.2rem;
+}
+
+/* メンバーカード */
+.member-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: move;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.15);
+}
+
+.member-card:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    transform: translateY(-2px);
+    border-color: #2563eb;
+}
+
+.member-card.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.member-card .member-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+}
+
+.member-card .member-name {
+    font-size: 0.85rem;
+}
+
+.member-card .member-grade {
+    font-size: 0.7rem;
+}
+
+/* レスポンシブ */
+@media (max-width: 1400px) {
+    .layer-2 {
+        gap: 50px;
+    }
+    
+    .layer-3 {
+        gap: 16px;
+    }
+    
+    .position-box {
+        width: 130px;
+        height: 85px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .member-pool {
+        grid-template-columns: 1fr;
+    }
+    
+    .layer-2 {
+        gap: 40px;
+    }
+    
+    .layer-3 {
+        gap: 14px;
+    }
+    
+    .position-box {
+        width: 120px;
+        height: 80px;
+    }
+}
+
+/* 役職名タイトル */
+.position-title {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    z-index: 10;
+}
+
+.layer-1 .position-title {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.layer-2 .position-title {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* 管轄枠 */
+.jurisdiction-frame {
+    margin-top: 16px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%);
+    border: 2px solid #10b981;
+    border-radius: 10px;
+    padding: 20px 12px 12px 12px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    overflow: visible;
+}
+
+.jurisdiction-title {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    z-index: 10;
+}
+
+.jurisdiction-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px 0;
+    min-height: 80px;
+    max-width: 360px;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.jurisdiction-content .position-box {
+    position: relative;
+}
+
+/* 管轄枠内のボックスは接続線を非表示 */
+.jurisdiction-content .position-box::before,
+.jurisdiction-content .position-box::after {
+    display: none;
+}
+
+.btn-add-in-jurisdiction {
+    display: block;
+    margin: 12px auto 0;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+}
+
+.btn-add-in-jurisdiction:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-add-in-jurisdiction i {
+    margin-right: 6px;
+}
+
+/* 第三階層削除ボタンの位置調整 */
+.jurisdiction-content .position-box .btn-delete {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.jurisdiction-content .position-box:hover .btn-delete {
+    opacity: 1;
+}
+
+.jurisdiction-content .position-box .btn-delete:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+/* セクション名バッジ */
+.section-name-badge {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    min-width: 60px;
+    justify-content: center;
+}
+
+.section-name-badge:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+}
+
+.section-name-badge i {
+    font-size: 0.55rem;
+    opacity: 0.8;
+}
+
+.section-name-text {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.section-name-text:empty::before {
+    content: 'セクション名';
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* レスポンシブ対応: 管轄枠内のグリッド */
+@media (max-width: 1024px) {
+    .jurisdiction-content {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .jurisdiction-content {
+        grid-template-columns: 1fr;
+        max-width: 120px;
+    }
+}

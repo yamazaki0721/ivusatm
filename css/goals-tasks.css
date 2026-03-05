@@ -1,0 +1,244 @@
+/* ========================================
+   目標・タスク管理
+======================================== */
+
+/* 目標セクション */
+.goals-section {
+    margin-bottom: 32px;
+}
+
+.goal-period {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.goal-period:last-child {
+    border-bottom: none;
+}
+
+.goal-period h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.goal-period h4 i {
+    color: var(--primary-color);
+}
+
+.goal-types {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.goal-item {
+    background: var(--bg-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+}
+
+.goal-label {
+    min-width: 100px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.goal-content {
+    flex: 1;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* タスクセクション */
+.tasks-section {
+    margin-top: 32px;
+}
+
+.task-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid var(--border-color);
+    background: white;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-secondary);
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.task-group h4 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.task-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: var(--transition);
+}
+
+.task-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.task-card.unassigned {
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.02);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.task-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.task-status {
+    padding: 4px 12px;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-progress {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+}
+
+.status-complete {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.task-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.task-detail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.task-detail i {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+}
+
+.task-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+}
+
+.task-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), #60a5fa);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    min-width: 45px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .goal-item {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .goal-label {
+        min-width: auto;
+    }
+
+    .task-filters {
+        flex-wrap: wrap;
+    }
+
+    .task-info {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

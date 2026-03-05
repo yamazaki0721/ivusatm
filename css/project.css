@@ -1,0 +1,723 @@
+/* ========================================
+   プロジェクト管理ページ専用スタイル
+======================================== */
+
+/* 横長メンバープール */
+.member-pool-horizontal {
+    margin-top: 32px;
+}
+
+.pool-section-horizontal {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.pool-section-horizontal h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pool-content-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 100px;
+    padding: 12px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    border: 2px dashed var(--border-color);
+    transition: var(--transition);
+}
+
+.pool-content-horizontal.drag-over {
+    background: #e8f4f8;
+    border-color: var(--primary-color);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.pool-content-horizontal:empty::before {
+    content: 'すべての参加者が配置されています';
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #888;
+    padding: 30px;
+    pointer-events: none;
+}
+
+/* メンバーカードを横長レイアウトに最適化 */
+.pool-content-horizontal .member-card {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 180px;
+}
+
+/* 人事評価グリッド */
+.evaluation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.evaluation-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.evaluation-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.evaluation-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.evaluation-header .member-avatar {
+    font-size: 3rem;
+}
+
+.evaluation-header h4 {
+    margin: 0;
+    font-size: 1.125rem;
+}
+
+.evaluation-header p {
+    margin: 4px 0 0 0;
+    opacity: 0.9;
+    font-size: 0.875rem;
+}
+
+.evaluation-body {
+    padding: 24px;
+}
+
+.evaluation-item {
+    margin-bottom: 20px;
+}
+
+.evaluation-item:last-child {
+    margin-bottom: 0;
+}
+
+.evaluation-item label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.star-rating {
+    display: flex;
+    gap: 8px;
+}
+
+.star-rating i {
+    font-size: 1.5rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.star-rating i:hover {
+    color: #ffc107;
+    transform: scale(1.2);
+}
+
+.star-rating i.active {
+    color: #ffc107;
+}
+
+.evaluation-comment {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.875rem;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+.evaluation-comment:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.evaluation-footer {
+    padding: 16px 24px;
+    background: var(--bg-color);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 研修ステータスバッジ */
+.training-warning {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #e74c3c;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.member-info.incomplete {
+    border: 2px solid #e74c3c;
+    background: #fee;
+}
+
+.member-info.complete {
+    border: 2px solid #27ae60;
+    background: #efe;
+}
+
+/* Mattermostボタン */
+.btn-warning {
+    background: #5865f2;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background: #4752c4;
+}
+
+.btn-xs {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* アニメーション */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .evaluation-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 役職名タイトル */
+.position-title {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+    z-index: 10;
+}
+
+.layer-1 .position-title {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.layer-2 .position-title {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* 管轄枠 */
+.jurisdiction-frame {
+    margin-top: 40px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%);
+    border: 2px solid #10b981;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+}
+
+.jurisdiction-title {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    z-index: 10;
+}
+
+.jurisdiction-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px 0;
+    min-height: 80px;
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+.jurisdiction-content .position-box {
+    position: relative;
+}
+
+/* 管轄枠内のボックスは接続線を非表示 */
+.jurisdiction-content .position-box::before,
+.jurisdiction-content .position-box::after {
+    display: none;
+}
+
+.btn-add-in-jurisdiction {
+    display: block;
+    margin: 16px auto 0;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+}
+
+.btn-add-in-jurisdiction:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-add-in-jurisdiction i {
+    margin-right: 6px;
+}
+
+/* 第三階層削除ボタンの位置調整 */
+.jurisdiction-content .position-box .btn-delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+}
+
+.jurisdiction-content .position-box:hover .btn-delete {
+    opacity: 1;
+}
+
+.jurisdiction-content .position-box .btn-delete:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+/* セクション名バッジ */
+.section-name-badge {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    min-width: 60px;
+    justify-content: center;
+}
+
+.section-name-badge:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
+}
+
+.section-name-badge i {
+    font-size: 0.55rem;
+    opacity: 0.8;
+}
+
+.section-name-text {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.section-name-text:empty::before {
+    content: 'セクション名';
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* レスポンシブ対応: 管轄枠内のグリッド */
+@media (max-width: 1024px) {
+    .jurisdiction-content {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .jurisdiction-content {
+        grid-template-columns: 1fr;
+        max-width: 120px;
+    }
+}
+
+/* ========================================
+   班編成サポート機能のスタイル
+======================================== */
+
+/* コントロールパネル */
+.team-formation-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.control-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.control-row .form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* 統計カード */
+.team-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 1.5rem;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* 班カード */
+.teams-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.team-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.team-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.team-card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.team-card-title i {
+    font-size: 1.25rem;
+}
+
+.team-member-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.team-card-stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.team-relation-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.team-card-toggle {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.team-card-body {
+    padding: 20px;
+    background: #fafafa;
+}
+
+.team-members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.team-member-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.team-member-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary-color);
+}
+
+.team-member-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 1.125rem;
+}
+
+.team-member-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.team-member-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.team-member-year {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+/* アルゴリズムの説明 */
+.algorithm-explanation {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+}
+
+.algorithm-explanation h4 {
+    margin: 16px 0 8px 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.algorithm-explanation h4:first-child {
+    margin-top: 0;
+}
+
+.algorithm-explanation p {
+    margin: 8px 0;
+    color: var(--text-secondary);
+}
+
+.algorithm-explanation ul {
+    margin: 8px 0;
+    padding-left: 24px;
+}
+
+.algorithm-explanation li {
+    margin: 6px 0;
+    color: var(--text-secondary);
+}
+
+.algorithm-explanation strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .control-row {
+        flex-direction: column;
+    }
+    
+    .control-row .form-group {
+        width: 100%;
+    }
+    
+    .team-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .team-card-stats {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .team-members-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

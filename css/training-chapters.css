@@ -1,0 +1,197 @@
+/* ========================================
+   動画チャプター機能のスタイル
+======================================== */
+
+/* モーダルサイズ拡大 */
+.modal-video-player .modal-dialog {
+    max-width: 1200px;
+}
+
+/* YouTube埋め込みプレイヤー */
+.youtube-player-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 アスペクト比 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.youtube-player-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* 動画とチャプターのコンテナ */
+.video-container-with-chapters {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 24px;
+}
+
+.video-player-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.chapters-section {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.chapters-section h4 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chapters-section h4 i {
+    color: var(--primary-color);
+}
+
+/* チャプターリスト */
+.chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* チャプターアイテム */
+.chapter-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--surface-color);
+}
+
+.chapter-item:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-color);
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chapter-item.active {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+.chapter-item.active .chapter-number {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* チャプター番号 */
+.chapter-number {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+/* チャプター情報 */
+.chapter-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.chapter-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.chapter-time {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.chapter-description {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* スクロールバーのカスタマイズ */
+.chapters-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chapters-section::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+.chapters-section::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.chapters-section::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+    .video-container-with-chapters {
+        grid-template-columns: 1fr;
+    }
+    
+    .chapters-section {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chapter-item {
+        padding: 10px;
+    }
+    
+    .chapter-number {
+        min-width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+    }
+    
+    .chapter-title {
+        font-size: 0.8125rem;
+    }
+    
+    .chapter-description {
+        -webkit-line-clamp: 1;
+    }
+}

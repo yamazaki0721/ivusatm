@@ -1,0 +1,372 @@
+/* ========================================
+   動画アップロード機能のスタイル
+======================================== */
+
+/* モーダルサイズ */
+.modal-xl .modal-dialog {
+    max-width: 1000px;
+}
+
+/* ページヘッダーのレイアウト調整 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+/* YouTube埋め込みプレビュー */
+.youtube-preview-container {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.youtube-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 アスペクト比 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #000;
+}
+
+.youtube-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* ファイルアップロードエリア（削除予定） */
+.file-upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 60px 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--bg-color);
+}
+
+.file-upload-area:hover {
+    border-color: var(--primary-color);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.file-upload-area.drag-over {
+    border-color: var(--primary-color);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.file-upload-area i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.file-upload-area p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.file-hint {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* 動画プレビューエリア */
+.video-preview-container {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.video-info {
+    background: var(--surface-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.video-info p {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.video-info p:last-child {
+    margin-bottom: 0;
+}
+
+.video-info strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ステップ表示 */
+.upload-step {
+    margin-bottom: 32px;
+}
+
+.upload-step h4 {
+    color: var(--text-primary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-step h4 i {
+    color: var(--primary-color);
+}
+
+/* フォームレイアウト */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group.flex-grow {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.875rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background: var(--surface-color);
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-control-sm {
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+}
+
+.form-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.required-mark {
+    color: var(--danger-color);
+}
+
+/* チャプター自動生成エリア */
+.chapter-auto-generate {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.chapter-auto-generate h5 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chapter-auto-generate h5 i {
+    color: var(--primary-color);
+}
+
+/* チャプターエディター */
+.chapter-editor {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.chapter-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.chapter-editor-header h5 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.chapter-list-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.empty-message {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.875rem;
+}
+
+/* チャプターエディターアイテム */
+.chapter-editor-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+}
+
+.chapter-editor-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.chapter-editor-item .chapter-number {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.chapter-fields {
+    flex: 1;
+}
+
+.chapter-actions {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background: var(--danger-color);
+    color: white;
+}
+
+/* チャプタープレビュー動画 */
+.chapter-preview-video {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.chapter-preview-video h5 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.chapter-preview-video .btn {
+    margin-top: 12px;
+}
+
+/* ボタンスタイル */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+}
+
+.btn-secondary {
+    background: var(--text-muted);
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background: var(--text-secondary);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .file-upload-area {
+        padding: 40px 20px;
+    }
+    
+    .file-upload-area i {
+        font-size: 3rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .chapter-editor-item {
+        flex-direction: column;
+    }
+    
+    .chapter-actions {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}

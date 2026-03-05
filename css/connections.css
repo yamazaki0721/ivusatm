@@ -1,0 +1,431 @@
+/* ========================================
+   Relation管理機能のスタイル（コンパクト版）
+   ======================================== */
+
+/* 承認待ちバナー（コンパクト） */
+.relation-approval-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 0.875rem;
+}
+
+.relation-approval-banner i {
+    color: #ffc107;
+}
+
+.relation-approval-banner .btn-link {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.875rem;
+    margin-left: auto;
+}
+
+.relation-approval-banner .btn-link:hover {
+    color: var(--primary-dark);
+}
+
+/* Relationタブ */
+.relation-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.relation-tab {
+    flex: 1;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.relation-tab:hover {
+    color: var(--primary-color);
+    background: var(--bg-light);
+}
+
+.relation-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.relation-tab i {
+    font-size: 0.9375rem;
+}
+
+.tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: var(--text-muted);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.relation-tab.active .tab-count {
+    background: var(--primary-color);
+}
+
+/* Relationタブコンテンツ */
+.relation-tab-content {
+    display: none;
+}
+
+.relation-tab-content.active {
+    display: block;
+}
+
+/* Relationリスト */
+.relation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.relation-list:empty::after {
+    content: 'まだRelationが登録されていません';
+    display: block;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Relationアイテム（コンパクト） */
+.relation-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease;
+}
+
+.relation-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.relation-item-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 1.125rem;
+}
+
+.relation-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.relation-item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.relation-item-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+}
+
+.relation-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+}
+
+.relation-badge.personal {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.relation-badge.approved {
+    background: var(--success-color);
+    color: #fff;
+}
+
+.relation-item-meta {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.relation-item-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.relation-item-meta i {
+    font-size: 0.75rem;
+}
+
+.relation-item-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 4px;
+}
+
+.relation-item-actions button {
+    padding: 6px 10px;
+    font-size: 0.8125rem;
+}
+
+/* 承認待ちリスト */
+.approval-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.approval-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.approval-card-header {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.approval-card-header h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.approval-card-header p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.approval-card-body {
+    margin-bottom: 12px;
+}
+
+.approval-card-body p {
+    margin: 6px 0;
+    font-size: 0.875rem;
+}
+
+.approval-card-body strong {
+    color: var(--text-primary);
+}
+
+.approval-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.approval-card-actions button {
+    flex: 1;
+}
+
+/* モーダル内の検索結果 */
+.search-results {
+    margin-top: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    display: none;
+}
+
+.search-results:not(:empty) {
+    display: block;
+}
+
+.search-result-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: var(--bg-light);
+}
+
+.search-result-item i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.selected-member {
+    padding: 10px 12px;
+    background: var(--primary-light);
+    border-radius: 6px;
+    border: 1px solid var(--primary-color);
+    font-size: 0.875rem;
+}
+
+.selected-member p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.selected-member i {
+    color: var(--success-color);
+    margin-right: 8px;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .relation-tab {
+        font-size: 0.8125rem;
+        padding: 8px 6px;
+    }
+    
+    .relation-tab i {
+        display: none;
+    }
+    
+    .relation-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .relation-item-actions {
+        width: 100%;
+    }
+    
+    .relation-item-actions button {
+        flex: 1;
+    }
+}
+
+/* ========================================
+   管理者用Relation追加モーダルのスタイル
+   ======================================== */
+
+/* ラジオボタングループ */
+.radio-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9375rem;
+}
+
+.radio-label input[type="radio"] {
+    cursor: pointer;
+}
+
+.radio-label span {
+    user-select: none;
+}
+
+/* チェックボックスグループ */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.9375rem;
+}
+
+.checkbox-label input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.checkbox-label span {
+    user-select: none;
+}
+
+/* フォーム行（横並び） */
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+/* 必須マーク */
+.required {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* 管理者用Relationアイテム */
+.management-relation-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease;
+    margin-bottom: 8px;
+}
+
+.management-relation-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+

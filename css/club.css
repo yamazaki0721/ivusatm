@@ -1,0 +1,1581 @@
+/* ========================================
+   クラブ管理ページ専用スタイル
+======================================== */
+
+/* クラブサマリー */
+.club-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.summary-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.summary-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.summary-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.summary-info h3 {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.summary-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* 組閣チャート */
+.organization-chart {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.org-level {
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.org-level:last-child {
+    margin-bottom: 0;
+}
+
+.org-level-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.org-level-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.org-positions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+/* 親ポジションから下への縦線 */
+.org-positions::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+/* 第一階層には上への線なし */
+.org-level[data-level="1"] .org-positions::before {
+    display: none;
+}
+
+/* 横線（複数の子ポジションを繋ぐ） */
+.org-positions::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: var(--border-color);
+    z-index: 1;
+}
+
+/* 第一階層には横線なし */
+.org-level[data-level="1"] .org-positions::after {
+    display: none;
+}
+
+/* 直接の子ポジションが1つの場合は横線なし（第一階層のみ該当） */
+.org-level[data-level="1"] .org-positions:has(.org-position:only-child)::after {
+    display: none;
+}
+
+.org-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+}
+
+.org-group-positions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+}
+
+/* グループ内の横線 */
+.org-group-positions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border-color);
+}
+
+/* グループ内のポジションが1つの場合は横線なし */
+.org-group-positions:has(.org-position:only-child)::before {
+    display: none;
+}
+
+.group-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 4px 12px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    position: relative;
+}
+
+/* グループラベルから下への縦線 */
+.group-label::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 2px;
+    height: 8px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+.org-position {
+    background: var(--bg-color);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    min-width: 180px;
+    text-align: center;
+    cursor: move;
+    transition: var(--transition);
+    position: relative;
+}
+
+/* 接続線 - 各ポジションから上への短い縦線 */
+.org-position::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+/* 第一階層のポジションから下への縦線 */
+.org-level[data-level="1"] .org-position::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+/* 第一階層は上への接続線なし */
+.org-level[data-level="1"] .org-position::before {
+    display: none;
+}
+
+/* 子を持つポジションのみ下への線を表示 */
+.org-position.has-children::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+/* グループ内のポジションの接続線調整 */
+.org-group .org-group-positions .org-position::before {
+    top: -30px;
+    height: 30px;
+}
+
+.org-position.filled {
+    border-style: solid;
+    border-color: var(--primary-color);
+    background: white;
+}
+
+.org-position:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.position-title {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.position-member {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.position-empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.position-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.position-actions button {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+/* プロジェクトチーム表示 */
+.project-teams {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.info-note {
+    background: var(--bg-color);
+    border-left: 4px solid var(--info-color);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.info-note i {
+    color: var(--info-color);
+    margin-right: 8px;
+}
+
+/* メンバープール */
+.member-pool {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.member-pool h4 {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.pool-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pool-member {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    cursor: move;
+    transition: var(--transition);
+}
+
+.pool-member:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.pool-member.dragging {
+    opacity: 0.5;
+}
+
+/* 参加状況 */
+.participation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.participation-item h4 {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.participation-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.stat-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.stat-circle svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.stat-circle circle {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 10;
+}
+
+.stat-circle .progress-ring {
+    stroke: var(--primary-color);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.stat-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.stat-text .percentage {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-text .label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.stat-details {
+    flex: 1;
+}
+
+.stat-details p {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+/* 研修セクション */
+.training-section {
+    margin-bottom: 32px;
+}
+
+.training-section:last-child {
+    margin-bottom: 0;
+}
+
+.training-section h4 {
+    font-size: 1.125rem;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.flag-badge {
+    background: var(--warning-color);
+    color: white;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.section-note {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+}
+
+/* 折りたたみ機能 */
+.group-header {
+    cursor: pointer;
+    padding: 12px 16px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    transition: var(--transition);
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.group-header:hover {
+    background: #e8f4f8;
+}
+
+.toggle-icon {
+    font-size: 0.875rem;
+    transition: transform 0.3s ease;
+    color: var(--primary-color);
+}
+
+.toggle-icon.fa-chevron-down {
+    transform: rotate(0deg);
+}
+
+.badges-list {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.badges-list.collapsed {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.member-badge.warning {
+    background: var(--warning-color);
+    color: white;
+}
+
+.member-badge.alert {
+    background: var(--error-color) !important;
+    color: white !important;
+    display: inline-flex !important;
+    padding: 6px 12px !important;
+    border-radius: var(--radius) !important;
+    font-size: 0.875rem !important;
+    margin: 4px !important;
+}
+
+
+.training-progress {
+    margin-bottom: 16px;
+}
+
+.progress-bar-large {
+    height: 32px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill-large {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), #6ee7b7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.member-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.badge-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* ========================================
+   目標・タスク管理
+   ======================================== */
+
+.section-description {
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.goals-section {
+    margin-bottom: 32px;
+}
+
+/* タイムライン */
+.goals-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+}
+
+/* 期間カード */
+.goal-period-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    position: relative;
+    transition: var(--transition);
+}
+
+.goal-period-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.goal-period-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.goal-period-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+}
+
+.badge-year {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.badge-halfyear {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.badge-threemonth {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.goal-period-date {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    background: var(--bg-color);
+    border-radius: 12px;
+}
+
+/* タイムラインの矢印 */
+.timeline-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+    position: relative;
+}
+
+.timeline-arrow i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+}
+
+.goal-period {
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.goal-period:last-child {
+    border-bottom: none;
+}
+
+.goal-period h4 {
+    margin: 0 0 20px 0;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.goal-types {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.goal-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 定量・定性を左右に並べる */
+.goal-dual-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.goal-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.goal-label i {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.goal-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: var(--transition);
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.goal-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.goal-input::placeholder {
+    color: #cbd5e1;
+    font-style: italic;
+    font-size: 0.85rem;
+}
+
+.goal-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* レスポンシブ */
+@media (max-width: 1024px) {
+    .goal-dual-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* タスク管理 */
+.tasks-section {
+    margin-top: 32px;
+}
+
+.task-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid var(--border-color);
+    background: white;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary-color);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.filter-btn.active {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+}
+
+.filter-btn .badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.filter-btn:not(.active) .badge {
+    background: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.filter-btn.active .badge {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.badge-success {
+    background: var(--success-color);
+    color: white;
+}
+
+.badge-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.task-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-group h4 {
+    margin: 0 0 12px 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.task-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    transition: var(--transition);
+}
+
+.task-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.task-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.task-status {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-progress {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color);
+}
+
+.status-complete {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.task-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.task-detail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.task-detail i {
+    color: var(--primary-color);
+}
+
+.task-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.task-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.task-actions .btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+
+.group-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+}
+
+.member-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+}
+
+.member-badge.incomplete {
+    background: var(--text-muted);
+}
+
+.member-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ========================================
+   参加詳細ページ
+======================================== */
+.participation-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 32px;
+}
+
+.detail-section {
+    background: var(--bg-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.detail-section h4 {
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 1.1rem;
+}
+
+.member-badge {
+    background: var(--primary-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.member-badge i {
+    font-size: 0.75rem;
+}
+
+.member-badge.badge-success {
+    background: var(--success-color);
+}
+
+.member-badge.badge-secondary {
+    background: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .participation-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   班長配置状況
+======================================== */
+.squad-leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.leader-section {
+    background: var(--bg-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.leader-section h4 {
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.leader-section h4 i {
+    color: var(--primary-color);
+}
+
+.leaders-list {
+    min-height: 100px;
+}
+
+.leaders-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.leader-card {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px;
+    transition: var(--transition);
+}
+
+.leader-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.leader-card.badge-primary {
+    border-color: var(--primary-color);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.leader-card.badge-success {
+    border-color: var(--success-color);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.leader-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.leader-info i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.leader-card.badge-success .leader-info i {
+    color: var(--success-color);
+}
+
+.leader-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.leader-meta {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.no-squad-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.no-squad-section h5 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.member-badge.badge-warning {
+    background: var(--warning-color);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .squad-leaders-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.member-item {
+    background: var(--bg-color);
+    border: 1px solid var(--warning-color);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.member-item i {
+    color: var(--warning-color);
+}
+
+/* 構成テーブル */
+.composition-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.composition-table th,
+.composition-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.composition-table th {
+    background: var(--bg-color);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.composition-table tbody tr:hover {
+    background: var(--bg-color);
+}
+
+/* 活動状況 */
+.activity-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.stat-item {
+    background: var(--bg-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+}
+
+.stat-item h4 {
+    font-size: 1.125rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.stat-active .stat-number {
+    color: var(--success-color);
+}
+
+.stat-inactive .stat-number {
+    color: var(--danger-color);
+}
+
+.stat-working .stat-number {
+    color: var(--primary-color);
+}
+
+.stat-not-working .stat-number {
+    color: var(--text-muted);
+}
+
+.member-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.member-name {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+.staff-assignments {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.staff-assignment {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px;
+}
+
+.assignment-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.assignment-role {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ドラッグ&ドロップ */
+.drag-over {
+    background: var(--primary-light) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+    .participation-grid,
+    .activity-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .participation-stats {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .club-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .org-positions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .org-position {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .composition-table {
+        font-size: 0.875rem;
+    }
+    
+    .composition-table th,
+    .composition-table td {
+        padding: 8px;
+    }
+}
+
+/* ========================================
+   Relationマップ
+   ======================================== */
+
+/* Relationコントロール */
+.relations-controls {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+.control-group label i {
+    margin-right: 6px;
+    color: var(--primary-color);
+}
+
+.btn-group {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-group .btn {
+    flex: 1;
+}
+
+/* ネットワーク図 */
+.network-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: #f8fafc;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+#networkCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+.network-legend {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+}
+
+.network-legend h4 {
+    margin: 0 0 12px 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.legend-line {
+    display: block;
+    width: 40px;
+    height: 0;
+}
+
+.legend-node {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+/* Relationリスト */
+#relationListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.member-relation-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: var(--transition);
+}
+
+.member-relation-card:hover {
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
+.member-relation-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.member-relation-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.member-relation-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Relation統計 */
+.relation-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--bg-light);
+    border-radius: var(--radius);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+/* Relation詳細セクション */
+.relation-details-section {
+    margin-bottom: 24px;
+}
+
+.relation-details-section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.subsection-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 16px 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.relation-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.relation-items-list:empty::after {
+    content: 'Relationが登録されていません';
+    display: block;
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* Relationアイテム（管理画面用） */
+.management-relation-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.management-relation-item:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.management-relation-item .relation-item-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 1.125rem;
+}
+
+.management-relation-item .relation-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.management-relation-item .relation-item-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.management-relation-item .relation-item-meta {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.management-relation-item .relation-item-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 4px;
+}
+
+.card-actions {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .relations-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .control-group {
+        width: 100%;
+    }
+    
+    .network-container {
+        height: 400px;
+    }
+    
+    .relation-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

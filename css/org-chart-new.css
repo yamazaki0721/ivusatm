@@ -1,0 +1,498 @@
+/* ========================================
+   新しい組織図レイアウトのスタイル
+======================================== */
+
+/* メインコンテナ */
+.org-chart-new-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    margin-top: 24px;
+    background: var(--bg-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* 左側：階層構造サイドバー */
+.org-hierarchy-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 右側：メンバー配置エリア */
+.org-members-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 階層アイテム */
+.hierarchy-item {
+    position: relative;
+}
+
+.hierarchy-item.level-1 {
+    margin-bottom: 16px;
+}
+
+.hierarchy-item.level-2 {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.hierarchy-item.level-3 {
+    /* padding-left削除して左右を完全に揃える */
+}
+
+/* 階層ボックス */
+.hierarchy-box {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s ease;
+}
+
+.hierarchy-item.level-1 .hierarchy-box {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.hierarchy-item.level-2 .hierarchy-box {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* 部署ボックス（新デザイン） */
+.hierarchy-department {
+    position: relative;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.hierarchy-department:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.department-header {
+    margin-bottom: 12px;
+}
+
+.department-header h3 {
+    color: #1e40af;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.department-content {
+    min-height: 120px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px dashed rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+    align-content: flex-start;
+    transition: all 0.2s ease;
+}
+
+.department-content:empty .department-placeholder,
+.department-content .department-placeholder {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #94a3b8;
+    font-size: 0.9375rem;
+    padding: 32px 0;
+}
+
+.department-content .department-placeholder i {
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+.department-content.drag-over {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6;
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* メンバーカードが追加されたらプレースホルダーを非表示 */
+.department-content:not(:empty) .department-placeholder {
+    display: none;
+}
+
+.hierarchy-item.level-3 .hierarchy-box {
+    background: #f0f9ff;
+    border: 2px solid #3b82f6;
+    padding: 10px 12px;
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.2);
+    min-height: 53px;
+    display: flex;
+    align-items: center;
+}
+
+.hierarchy-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 階層タイトル */
+.hierarchy-title {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hierarchy-item.level-3 .hierarchy-title {
+    color: #1e40af;
+    margin-bottom: 0;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.hierarchy-item.level-3 .hierarchy-title:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.section-edit-icon {
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-left: 8px;
+}
+
+.hierarchy-title:hover .section-edit-icon {
+    opacity: 1;
+}
+
+/* メンバースロット */
+.hierarchy-member-slot {
+    min-height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: all 0.2s ease;
+}
+
+.hierarchy-member-slot.drag-over {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: #fff;
+    border-style: solid;
+}
+
+.hierarchy-member-slot .member-info.empty {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+.hierarchy-member-slot .member-info.empty i {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+/* セクショングループ */
+.hierarchy-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-left: 0;
+    border-left: none;
+}
+
+/* セクション追加ボタン */
+.btn-add-section {
+    padding: 8px 12px;
+    background: transparent;
+    border: 2px dashed #3b82f6;
+    color: #3b82f6;
+    border-radius: 6px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-add-section:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+/* セクション削除ボタン */
+.btn-delete-section {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    font-size: 0.625rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.hierarchy-box:hover .btn-delete-section {
+    opacity: 1;
+}
+
+.btn-delete-section:hover {
+    background: #dc2626;
+    transform: scale(1.1);
+}
+
+/* 右側：メンバー配置エリア */
+.org-members-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* スクロールを削除して、左側に合わせて表示 */
+}
+
+/* メンバー行 */
+.members-row {
+    min-height: 45px;
+    display: flex;
+    align-items: stretch;
+}
+
+.members-row.level-1 {
+    min-height: 92px;
+    margin-bottom: 16px;
+}
+
+.members-row.level-2 {
+    min-height: 92px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.members-row.level-3 {
+    min-height: 53px;
+}
+
+/* メンバーコンテナ */
+.members-container {
+    width: 100%;
+    min-height: 53px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.members-container:empty {
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.members-container:empty::after {
+    content: 'メンバーをドロップ';
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
+
+.members-container.drag-over {
+    border-color: var(--primary-color);
+    border-style: solid;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* メンバーカード（円形アイコン + 名前） */
+.member-card-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    cursor: grab;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.member-card-horizontal:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.member-card-horizontal.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-name {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+/* 未配置メンバープール（横長） */
+.member-pool-horizontal {
+    margin-top: 32px;
+}
+
+.pool-section-horizontal {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+.pool-section-horizontal h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.125rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pool-content-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-height: 100px;
+    padding: 12px;
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    border: 2px dashed var(--border-color);
+    transition: var(--transition);
+}
+
+.pool-content-horizontal.drag-over {
+    background: #e8f4f8;
+    border-color: var(--primary-color);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.pool-content-horizontal:empty::before {
+    content: 'すべてのメンバーが配置されています';
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #888;
+    padding: 30px;
+    pointer-events: none;
+}
+
+/* レスポンシブ */
+@media (max-width: 1200px) {
+    .org-chart-new-layout {
+        flex-direction: column;
+    }
+    
+    .org-hierarchy-sidebar {
+        width: 100%;
+    }
+    
+    .org-members-area {
+        max-height: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .org-chart-new-layout {
+        padding: 16px;
+    }
+    
+    .hierarchy-item.level-3 {
+        padding-left: 12px;
+    }
+    
+    .members-row.level-3 {
+        padding-left: 12px;
+    }
+    
+    .member-card-horizontal {
+        padding: 6px 10px;
+    }
+    
+    .member-avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .member-name {
+        font-size: 0.8125rem;
+    }
+}
